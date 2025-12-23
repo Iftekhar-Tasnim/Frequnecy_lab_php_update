@@ -1,0 +1,92 @@
+/** @type {import('tailwindcss').Config} */
+module.exports = {
+    content: [
+        "./index.php",
+        "./pages/**/*.php",
+        "./pages/**/*.html",
+        "./includes/**/*.php",
+        "./js/**/*.js"
+    ],
+    theme: {
+        extend: {
+            fontFamily: {
+                'sans': ['Inter', 'sans-serif'],
+                'exo': ['Exo 2', 'sans-serif'],
+            },
+            colors: {
+                'yale-blue': {
+                    50: '#e9f5fc',
+                    100: '#d2ebf9',
+                    200: '#a5d8f3',
+                    300: '#78c4ed',
+                    400: '#4bb0e7',
+                    500: '#1f9de0',
+                    600: '#187db4',
+                    700: '#125e87',
+                    800: '#0c3f5a',
+                    900: '#061f2d',
+                    950: '#04161f',
+                },
+                'platinum': {
+                    50: '#eef3f6',
+                    100: '#dde7ee',
+                    200: '#bbcfdd',
+                    300: '#99b8cc',
+                    400: '#77a0bb',
+                    500: '#5588aa',
+                    600: '#446d88',
+                    700: '#335266',
+                    800: '#223644',
+                    900: '#111b22',
+                    950: '#0c1318',
+                },
+                'fresh-sky': {
+                    50: '#e8f6fc',
+                    100: '#d1edfa',
+                    200: '#a3dbf5',
+                    300: '#75c9f0',
+                    400: '#47b7eb',
+                    500: '#19a5e6',
+                    600: '#1484b8',
+                    700: '#0f638a',
+                    800: '#0a425c',
+                    900: '#05212e',
+                    950: '#041720',
+                },
+                'prussian-blue': {
+                    50: '#edf1f8',
+                    100: '#dae4f1',
+                    200: '#b5c8e3',
+                    300: '#90add5',
+                    400: '#6b91c7',
+                    500: '#4676b9',
+                    600: '#385e94',
+                    700: '#2a476f',
+                    800: '#1c2f4a',
+                    900: '#0e1825',
+                    950: '#0a111a',
+                },
+            },
+        },
+    },
+    plugins: [require("daisyui")],
+    daisyui: {
+        themes: [
+            {
+                "f-lab": {
+                    "primary": "#1f9de0",
+                    "secondary": "#5588aa",
+                    "accent": "#19a5e6",
+                    "neutral": "#335266",
+                    "base-100": "#ffffff",
+                    "info": "#1f9de0",
+                    "success": "#10b981",
+                    "warning": "#f59e0b",
+                    "error": "#ef4444",
+                },
+            },
+            "light",
+            "dark",
+        ],
+    },
+}

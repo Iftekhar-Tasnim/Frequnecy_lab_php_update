@@ -1,0 +1,50 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+    html {
+        scroll-behavior: smooth;
+    }
+
+    body {
+        @apply font-sans leading-relaxed text-platinum-900 bg-white;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+        @apply font-exo font-bold;
+    }
+}
+
+@layer components {
+    .nav-link {
+        @apply relative px-4 py-2 transition-all duration-300 hover:text-yale-blue-500;
+    }
+
+    .nav-indicator {
+        @apply absolute bottom-0 left-0 w-full h-0.5 bg-yale-blue-500 origin-left scale-x-0 transition-transform duration-300;
+    }
+
+    .nav-link:hover .nav-indicator {
+        @apply scale-x-100;
+    }
+
+    .btn-premium {
+        @apply px-8 py-3 bg-gradient-to-r from-yale-blue-600 to-fresh-sky-500 text-white rounded-full font-bold shadow-lg shadow-yale-blue-900/40 hover:scale-105 active:scale-95 transition-all;
+    }
+
+    /* Hide scrollbar for carousel */
+    .scrollbar-hide::-webkit-scrollbar {
+        display: none;
+    }
+
+    .scrollbar-hide {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+    }
+}
