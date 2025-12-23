@@ -9,9 +9,13 @@ module.exports = {
     ],
     theme: {
         extend: {
+            spacing: {
+                '15': '3.75rem',
+            },
             fontFamily: {
                 'sans': ['Inter', 'sans-serif'],
-                'exo': ['Exo 2', 'sans-serif'],
+                'inter': ['Inter', 'sans-serif'],
+                'exo': ['"Exo 2"', 'sans-serif'],
             },
             colors: {
                 'yale-blue': {

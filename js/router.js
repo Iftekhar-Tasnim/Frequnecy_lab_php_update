@@ -4,19 +4,19 @@
 class Router {
     constructor() {
         this.routes = {
-            '/': 'index.html',
-            '/home': 'index.html',
-            '/about': 'pages/about.html',
-            '/programmes': 'pages/programmes.html',
-            '/publications': 'pages/publications.html',
-            '/team': 'pages/team.html',
-            '/gallery': 'pages/gallery.html',
+            '/': 'index.php',
+            '/home': 'index.php',
+            '/about': 'pages/about.php',
+            '/programmes': 'pages/programmes.php',
+            '/publications': 'pages/publications.php',
+            '/team': 'pages/team.php',
+            '/gallery': 'pages/gallery.php',
 
-            '/blog': 'pages/blog.html',
-            '/shop': 'pages/shop.html',
-            '/contact': 'pages/contact.html',
-            '/privacy-policy': 'pages/privacy-policy.html',
-            '/safeguard': 'pages/safeguard.html'
+            '/blog': 'pages/blog.php',
+            '/shop': 'pages/shop.php',
+            '/contact': 'pages/contact.php',
+            '/privacy-policy': 'pages/privacy-policy.php',
+            '/safeguard': 'pages/safeguard.php'
         };
 
         this.currentRoute = null;
@@ -82,47 +82,47 @@ class Router {
 
         // Map file paths to routes
         const pathMap = {
-            'pages/about.html': '/about',
-            '../pages/about.html': '/about',
-            './pages/about.html': '/about',
-            'about.html': '/about',
-            'pages/programmes.html': '/programmes',
-            '../pages/programmes.html': '/programmes',
-            './pages/programmes.html': '/programmes',
-            'programmes.html': '/programmes',
-            'pages/publications.html': '/publications',
-            '../pages/publications.html': '/publications',
-            './pages/publications.html': '/publications',
-            'publications.html': '/publications',
-            'pages/team.html': '/team',
-            '../pages/team.html': '/team',
-            './pages/team.html': '/team',
-            'team.html': '/team',
-            'pages/gallery.html': '/gallery',
-            '../pages/gallery.html': '/gallery',
-            './pages/gallery.html': '/gallery',
-            'gallery.html': '/gallery',
+            'pages/about.php': '/about',
+            '../pages/about.php': '/about',
+            './pages/about.php': '/about',
+            'about.php': '/about',
+            'pages/programmes.php': '/programmes',
+            '../pages/programmes.php': '/programmes',
+            './pages/programmes.php': '/programmes',
+            'programmes.php': '/programmes',
+            'pages/publications.php': '/publications',
+            '../pages/publications.php': '/publications',
+            './pages/publications.php': '/publications',
+            'publications.php': '/publications',
+            'pages/team.php': '/team',
+            '../pages/team.php': '/team',
+            './pages/team.php': '/team',
+            'team.php': '/team',
+            'pages/gallery.php': '/gallery',
+            '../pages/gallery.php': '/gallery',
+            './pages/gallery.php': '/gallery',
+            'gallery.php': '/gallery',
 
-            'pages/blog.html': '/blog',
-            '../pages/blog.html': '/blog',
-            './pages/blog.html': '/blog',
-            'blog.html': '/blog',
-            'pages/shop.html': '/shop',
-            '../pages/shop.html': '/shop',
-            './pages/shop.html': '/shop',
-            'shop.html': '/shop',
-            'pages/contact.html': '/contact',
-            '../pages/contact.html': '/contact',
-            './pages/contact.html': '/contact',
-            'contact.html': '/contact',
-            'pages/privacy-policy.html': '/privacy-policy',
-            '../pages/privacy-policy.html': '/privacy-policy',
-            './pages/privacy-policy.html': '/privacy-policy',
-            'privacy-policy.html': '/privacy-policy',
-            'pages/safeguard.html': '/safeguard',
-            '../pages/safeguard.html': '/safeguard',
-            './pages/safeguard.html': '/safeguard',
-            'safeguard.html': '/safeguard'
+            'pages/blog.php': '/blog',
+            '../pages/blog.php': '/blog',
+            './pages/blog.php': '/blog',
+            'blog.php': '/blog',
+            'pages/shop.php': '/shop',
+            '../pages/shop.php': '/shop',
+            './pages/shop.php': '/shop',
+            'shop.php': '/shop',
+            'pages/contact.php': '/contact',
+            '../pages/contact.php': '/contact',
+            './pages/contact.php': '/contact',
+            'contact.php': '/contact',
+            'pages/privacy-policy.php': '/privacy-policy',
+            '../pages/privacy-policy.php': '/privacy-policy',
+            './pages/privacy-policy.php': '/privacy-policy',
+            'privacy-policy.php': '/privacy-policy',
+            'pages/safeguard.php': '/safeguard',
+            '../pages/safeguard.php': '/safeguard',
+            './pages/safeguard.php': '/safeguard',
+            'safeguard.php': '/safeguard'
         };
 
         return pathMap[href] || null;
@@ -192,18 +192,18 @@ class Router {
     getRouteFromPathname(pathname) {
         // Convert pathname to route
         const pathMap = {
-            '/index.html': '/',
-            '/about.html': '/about',
-            '/programmes.html': '/programmes',
-            '/publications.html': '/publications',
-            '/team.html': '/team',
-            '/gallery.html': '/gallery',
+            '/index.php': '/',
+            '/about.php': '/about',
+            '/programmes.php': '/programmes',
+            '/publications.php': '/publications',
+            '/team.php': '/team',
+            '/gallery.php': '/gallery',
 
-            '/blog.html': '/blog',
-            '/shop.html': '/shop',
-            '/contact.html': '/contact',
-            '/privacy-policy.html': '/privacy-policy',
-            '/safeguard.html': '/safeguard'
+            '/blog.php': '/blog',
+            '/shop.php': '/shop',
+            '/contact.php': '/contact',
+            '/privacy-policy.php': '/privacy-policy',
+            '/safeguard.php': '/safeguard'
         };
 
         // Check direct match
@@ -249,10 +249,12 @@ class Router {
             bodyContent = bodyContent.replace(/\.\.\/assets\//g, '/assets/');
             bodyContent = bodyContent.replace(/\.\.\/dist\//g, '/dist/');
             bodyContent = bodyContent.replace(/\.\.\/js\//g, '/js/');
+            bodyContent = bodyContent.replace(/\.\.\/css\//g, '/css/');
             // Also handle ./ paths
             bodyContent = bodyContent.replace(/\.\/assets\//g, '/assets/');
             bodyContent = bodyContent.replace(/\.\/dist\//g, '/dist/');
             bodyContent = bodyContent.replace(/\.\/js\//g, '/js/');
+            bodyContent = bodyContent.replace(/\.\/css\//g, '/css/');
             // Handle template literals in JavaScript (backtick strings)
             bodyContent = bodyContent.replace(/`\.\.\/assets\//g, '`/assets/');
             bodyContent = bodyContent.replace(/`\.\.\/dist\//g, '`/dist/');
