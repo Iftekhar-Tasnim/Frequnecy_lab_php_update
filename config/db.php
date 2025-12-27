@@ -1,7 +1,7 @@
 <?php
 // Database configuration
 $host = 'localhost';
-$db   = 'f_lab_db';
+$db   = 'frequencylab';
 $user = 'root';
 $pass = '';
 $charset = 'utf8mb4';

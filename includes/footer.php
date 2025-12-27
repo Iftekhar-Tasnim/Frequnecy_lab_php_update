@@ -42,8 +42,8 @@
                     <li><a href="#/publications" class="text-platinum-400 hover:text-white transition-all text-sm">Publications</a></li>
                     <li><a href="#/team" class="text-platinum-400 hover:text-white transition-all text-sm">Our Team</a></li>
                     <li><a href="#/gallery" class="text-platinum-400 hover:text-white transition-all text-sm">Gallery</a></li>
-                    <li><a href="#/blog" class="text-platinum-400 hover:text-white transition-all text-sm">Blog</a></li>
-                    <li><a href="#/shop" class="text-platinum-400 hover:text-white transition-all text-sm">Shop</a></li>
+                    <!-- <li><a href="#/blog" class="text-platinum-400 hover:text-white transition-all text-sm">Blog</a></li>
+                    <li><a href="#/shop" class="text-platinum-400 hover:text-white transition-all text-sm">Shop</a></li> -->
                 </ul>
             </div>
 
@@ -61,7 +61,7 @@
                     <li class="flex items-start gap-4 group">
                         <svg class="w-5 h-5 text-fresh-sky-500 mt-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
                         <div class="space-y-1">
-                            <p class="text-sm text-platinum-400"><span class="font-medium">Hotline:</span> <a href="tel:01886660098" class="hover:text-white transition-colors">01886660098</a></p>
+                            <!-- <p class="text-sm text-platinum-400"><span class="font-medium">Hotline:</span> <a href="tel:01886660098" class="hover:text-white transition-colors">01886660098</a></p> -->
                             <p class="text-sm text-platinum-400"><span class="font-medium">Phone:</span> <a href="tel:01886660098" class="hover:text-white transition-colors">01886660098</a> & <a href="tel:01886677379" class="hover:text-white transition-colors">01886677379</a></p>
                         </div>
                     </li>

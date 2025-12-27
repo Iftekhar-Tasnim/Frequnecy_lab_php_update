@@ -244,24 +244,24 @@ class Router {
             // Extract main content (everything except head)
             let bodyContent = doc.body.innerHTML;
 
-            // Fix asset paths - convert relative paths from pages/ to absolute paths
-            // Replace ../assets/ with /assets/ and ../dist/ with /dist/
-            bodyContent = bodyContent.replace(/\.\.\/assets\//g, '/assets/');
-            bodyContent = bodyContent.replace(/\.\.\/dist\//g, '/dist/');
-            bodyContent = bodyContent.replace(/\.\.\/js\//g, '/js/');
-            bodyContent = bodyContent.replace(/\.\.\/css\//g, '/css/');
+            // Fix asset paths - convert relative paths from pages/ to absolute paths by removing ../
+            // We use relative paths (assets/) instead of absolute (/assets/) to support subdirectories
+            bodyContent = bodyContent.replace(/\.\.\/assets\//g, 'assets/');
+            bodyContent = bodyContent.replace(/\.\.\/dist\//g, 'dist/');
+            bodyContent = bodyContent.replace(/\.\.\/js\//g, 'js/');
+            bodyContent = bodyContent.replace(/\.\.\/css\//g, 'css/');
             // Also handle ./ paths
-            bodyContent = bodyContent.replace(/\.\/assets\//g, '/assets/');
-            bodyContent = bodyContent.replace(/\.\/dist\//g, '/dist/');
-            bodyContent = bodyContent.replace(/\.\/js\//g, '/js/');
-            bodyContent = bodyContent.replace(/\.\/css\//g, '/css/');
+            bodyContent = bodyContent.replace(/\.\/assets\//g, 'assets/');
+            bodyContent = bodyContent.replace(/\.\/dist\//g, 'dist/');
+            bodyContent = bodyContent.replace(/\.\/js\//g, 'js/');
+            bodyContent = bodyContent.replace(/\.\/css\//g, 'css/');
             // Handle template literals in JavaScript (backtick strings)
-            bodyContent = bodyContent.replace(/`\.\.\/assets\//g, '`/assets/');
-            bodyContent = bodyContent.replace(/`\.\.\/dist\//g, '`/dist/');
-            bodyContent = bodyContent.replace(/`\.\.\/js\//g, '`/js/');
-            bodyContent = bodyContent.replace(/`\.\/assets\//g, '`/assets/');
-            bodyContent = bodyContent.replace(/`\.\/dist\//g, '`/dist/');
-            bodyContent = bodyContent.replace(/`\.\/js\//g, '`/js/');
+            bodyContent = bodyContent.replace(/`\.\.\/assets\//g, '`assets/');
+            bodyContent = bodyContent.replace(/`\.\.\/dist\//g, '`dist/');
+            bodyContent = bodyContent.replace(/`\.\.\/js\//g, '`js/');
+            bodyContent = bodyContent.replace(/`\.\/assets\//g, '`assets/');
+            bodyContent = bodyContent.replace(/`\.\/dist\//g, '`dist/');
+            bodyContent = bodyContent.replace(/`\.\/js\//g, '`js/');
 
             // Convert all internal navigation links to hash routes
             // Home page links
