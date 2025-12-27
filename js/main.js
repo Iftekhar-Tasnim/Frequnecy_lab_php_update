@@ -171,22 +171,11 @@ function initializeMobileMenu() {
 
 // Navbar scroll effect
 function initializeNavbarScroll() {
+    // Dynamic scroll effect removed as per user request
     const navbar = document.getElementById('navbar');
-    if (!navbar) return;
-
-    let lastScroll = 0;
-
-    window.addEventListener('scroll', function () {
-        const currentScroll = window.pageYOffset;
-
-        if (currentScroll > 50) {
-            navbar.classList.add('navbar-scrolled');
-        } else {
-            navbar.classList.remove('navbar-scrolled');
-        }
-
-        lastScroll = currentScroll;
-    });
+    if (navbar) {
+        navbar.classList.remove('navbar-scrolled');
+    }
 }
 
 // Carousel functionality
