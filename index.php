@@ -20,7 +20,7 @@
 <body class="bg-white font-sans selection:bg-yale-blue-500 selection:text-white">
 
     <!-- Navigation -->
-    <?php include 'includes/navbar.php'; ?>
+    <?php $path = ''; include 'includes/navbar.php'; ?>
 
     <!-- Hero Section -->
     <section class="relative h-screen flex items-center justify-center overflow-hidden">

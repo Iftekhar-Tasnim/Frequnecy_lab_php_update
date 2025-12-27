@@ -7,7 +7,8 @@
             <!-- Column 1: Brand -->
             <div class="space-y-8">
                 <div class="flex items-center gap-4">
-                    <img src="assets/logo/flab_logo.jpg" alt="F Lab Logo" class="h-14 w-14 rounded-xl shadow-2xl">
+                    <?php $base = $path ?? ''; ?>
+                    <img src="<?php echo $base; ?>assets/logo/flab_logo.jpg" alt="F Lab Logo" class="h-14 w-14 rounded-xl shadow-2xl">
                     <div>
                         <h3 class="text-2xl font-bold text-white tracking-tight">Frequency Lab</h3>
                         <p class="text-[10px] text-fresh-sky-500 font-bold uppercase tracking-[0.2em] mt-2">Innovate. Learn. Create.</p>
@@ -42,8 +43,7 @@
                     <li><a href="#/publications" class="text-platinum-400 hover:text-white transition-all text-sm">Publications</a></li>
                     <li><a href="#/team" class="text-platinum-400 hover:text-white transition-all text-sm">Our Team</a></li>
                     <li><a href="#/gallery" class="text-platinum-400 hover:text-white transition-all text-sm">Gallery</a></li>
-                    <!-- <li><a href="#/blog" class="text-platinum-400 hover:text-white transition-all text-sm">Blog</a></li>
-                    <li><a href="#/shop" class="text-platinum-400 hover:text-white transition-all text-sm">Shop</a></li> -->
+                    <!-- <li><a href="#/shop" class="text-platinum-400 hover:text-white transition-all text-sm">Shop</a></li> -->
                 </ul>
             </div>
 
