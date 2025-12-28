@@ -91,3 +91,7 @@
         </div>
     </div>
 </footer>
+
+
+<!-- Main JS -->
+<script src="<?php echo $base; ?>js/main.js"></script>

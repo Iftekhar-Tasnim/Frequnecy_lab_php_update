@@ -84,6 +84,7 @@ module.exports = {
             animation: {
                 float: 'float 6s ease-in-out infinite',
                 'fade-in-up': 'fadeInUp 0.8s ease-out forwards',
+                'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
             },
         },
     },

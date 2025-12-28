@@ -76,7 +76,8 @@ class Router {
         }
 
         // Handle relative paths
-        if (href === 'index.html' || href === './index.html' || href === '../index.html' || href === '/') {
+        if (href === 'index.html' || href === './index.html' || href === '../index.html' || href === '/' ||
+            href === 'index.php' || href === './index.php' || href === '../index.php') {
             return '/';
         }
 
@@ -268,36 +269,59 @@ class Router {
             bodyContent = bodyContent.replace(/href="\.\.\/index\.html"/g, 'href="#/"');
             bodyContent = bodyContent.replace(/href="\.\/index\.html"/g, 'href="#/"');
             bodyContent = bodyContent.replace(/href="index\.html"/g, 'href="#/"');
+            bodyContent = bodyContent.replace(/href="\.\.\/index\.php"/g, 'href="#/"');
+            bodyContent = bodyContent.replace(/href="\.\/index\.php"/g, 'href="#/"');
+            bodyContent = bodyContent.replace(/href="index\.php"/g, 'href="#/"');
 
             // About page
             bodyContent = bodyContent.replace(/href="\.\.\/pages\/about\.html"/g, 'href="#/about"');
             bodyContent = bodyContent.replace(/href="\.\/pages\/about\.html"/g, 'href="#/about"');
             bodyContent = bodyContent.replace(/href="pages\/about\.html"/g, 'href="#/about"');
             bodyContent = bodyContent.replace(/href="about\.html"/g, 'href="#/about"');
+            bodyContent = bodyContent.replace(/href="\.\.\/pages\/about\.php"/g, 'href="#/about"');
+            bodyContent = bodyContent.replace(/href="\.\/pages\/about\.php"/g, 'href="#/about"');
+            bodyContent = bodyContent.replace(/href="pages\/about\.php"/g, 'href="#/about"');
+            bodyContent = bodyContent.replace(/href="about\.php"/g, 'href="#/about"');
 
             // Programmes page
             bodyContent = bodyContent.replace(/href="\.\.\/pages\/programmes\.html"/g, 'href="#/programmes"');
             bodyContent = bodyContent.replace(/href="\.\/pages\/programmes\.html"/g, 'href="#/programmes"');
             bodyContent = bodyContent.replace(/href="pages\/programmes\.html"/g, 'href="#/programmes"');
             bodyContent = bodyContent.replace(/href="programmes\.html"/g, 'href="#/programmes"');
+            bodyContent = bodyContent.replace(/href="\.\.\/pages\/programmes\.php"/g, 'href="#/programmes"');
+            bodyContent = bodyContent.replace(/href="\.\/pages\/programmes\.php"/g, 'href="#/programmes"');
+            bodyContent = bodyContent.replace(/href="pages\/programmes\.php"/g, 'href="#/programmes"');
+            bodyContent = bodyContent.replace(/href="programmes\.php"/g, 'href="#/programmes"');
 
             // Publications page
             bodyContent = bodyContent.replace(/href="\.\.\/pages\/publications\.html"/g, 'href="#/publications"');
             bodyContent = bodyContent.replace(/href="\.\/pages\/publications\.html"/g, 'href="#/publications"');
             bodyContent = bodyContent.replace(/href="pages\/publications\.html"/g, 'href="#/publications"');
             bodyContent = bodyContent.replace(/href="publications\.html"/g, 'href="#/publications"');
+            bodyContent = bodyContent.replace(/href="\.\.\/pages\/publications\.php"/g, 'href="#/publications"');
+            bodyContent = bodyContent.replace(/href="\.\/pages\/publications\.php"/g, 'href="#/publications"');
+            bodyContent = bodyContent.replace(/href="pages\/publications\.php"/g, 'href="#/publications"');
+            bodyContent = bodyContent.replace(/href="publications\.php"/g, 'href="#/publications"');
 
             // Team page
             bodyContent = bodyContent.replace(/href="\.\.\/pages\/team\.html"/g, 'href="#/team"');
             bodyContent = bodyContent.replace(/href="\.\/pages\/team\.html"/g, 'href="#/team"');
             bodyContent = bodyContent.replace(/href="pages\/team\.html"/g, 'href="#/team"');
             bodyContent = bodyContent.replace(/href="team\.html"/g, 'href="#/team"');
+            bodyContent = bodyContent.replace(/href="\.\.\/pages\/team\.php"/g, 'href="#/team"');
+            bodyContent = bodyContent.replace(/href="\.\/pages\/team\.php"/g, 'href="#/team"');
+            bodyContent = bodyContent.replace(/href="pages\/team\.php"/g, 'href="#/team"');
+            bodyContent = bodyContent.replace(/href="team\.php"/g, 'href="#/team"');
 
             // Gallery page
             bodyContent = bodyContent.replace(/href="\.\.\/pages\/gallery\.html"/g, 'href="#/gallery"');
             bodyContent = bodyContent.replace(/href="\.\/pages\/gallery\.html"/g, 'href="#/gallery"');
             bodyContent = bodyContent.replace(/href="pages\/gallery\.html"/g, 'href="#/gallery"');
             bodyContent = bodyContent.replace(/href="gallery\.html"/g, 'href="#/gallery"');
+            bodyContent = bodyContent.replace(/href="\.\.\/pages\/gallery\.php"/g, 'href="#/gallery"');
+            bodyContent = bodyContent.replace(/href="\.\/pages\/gallery\.php"/g, 'href="#/gallery"');
+            bodyContent = bodyContent.replace(/href="pages\/gallery\.php"/g, 'href="#/gallery"');
+            bodyContent = bodyContent.replace(/href="gallery\.php"/g, 'href="#/gallery"');
 
 
 
@@ -306,30 +330,50 @@ class Router {
             bodyContent = bodyContent.replace(/href="\.\/pages\/blog\.html"/g, 'href="#/blog"');
             bodyContent = bodyContent.replace(/href="pages\/blog\.html"/g, 'href="#/blog"');
             bodyContent = bodyContent.replace(/href="blog\.html"/g, 'href="#/blog"');
+            bodyContent = bodyContent.replace(/href="\.\.\/pages\/blog\.php"/g, 'href="#/blog"');
+            bodyContent = bodyContent.replace(/href="\.\/pages\/blog\.php"/g, 'href="#/blog"');
+            bodyContent = bodyContent.replace(/href="pages\/blog\.php"/g, 'href="#/blog"');
+            bodyContent = bodyContent.replace(/href="blog\.php"/g, 'href="#/blog"');
 
             // Shop page
             bodyContent = bodyContent.replace(/href="\.\.\/pages\/shop\.html"/g, 'href="#/shop"');
             bodyContent = bodyContent.replace(/href="\.\/pages\/shop\.html"/g, 'href="#/shop"');
             bodyContent = bodyContent.replace(/href="pages\/shop\.html"/g, 'href="#/shop"');
             bodyContent = bodyContent.replace(/href="shop\.html"/g, 'href="#/shop"');
+            bodyContent = bodyContent.replace(/href="\.\.\/pages\/shop\.php"/g, 'href="#/shop"');
+            bodyContent = bodyContent.replace(/href="\.\/pages\/shop\.php"/g, 'href="#/shop"');
+            bodyContent = bodyContent.replace(/href="pages\/shop\.php"/g, 'href="#/shop"');
+            bodyContent = bodyContent.replace(/href="shop\.php"/g, 'href="#/shop"');
 
             // Contact page
             bodyContent = bodyContent.replace(/href="\.\.\/pages\/contact\.html"/g, 'href="#/contact"');
             bodyContent = bodyContent.replace(/href="\.\/pages\/contact\.html"/g, 'href="#/contact"');
             bodyContent = bodyContent.replace(/href="pages\/contact\.html"/g, 'href="#/contact"');
             bodyContent = bodyContent.replace(/href="contact\.html"/g, 'href="#/contact"');
+            bodyContent = bodyContent.replace(/href="\.\.\/pages\/contact\.php"/g, 'href="#/contact"');
+            bodyContent = bodyContent.replace(/href="\.\/pages\/contact\.php"/g, 'href="#/contact"');
+            bodyContent = bodyContent.replace(/href="pages\/contact\.php"/g, 'href="#/contact"');
+            bodyContent = bodyContent.replace(/href="contact\.php"/g, 'href="#/contact"');
 
             // Privacy Policy page
             bodyContent = bodyContent.replace(/href="\.\.\/pages\/privacy-policy\.html"/g, 'href="#/privacy-policy"');
             bodyContent = bodyContent.replace(/href="\.\/pages\/privacy-policy\.html"/g, 'href="#/privacy-policy"');
             bodyContent = bodyContent.replace(/href="pages\/privacy-policy\.html"/g, 'href="#/privacy-policy"');
             bodyContent = bodyContent.replace(/href="privacy-policy\.html"/g, 'href="#/privacy-policy"');
+            bodyContent = bodyContent.replace(/href="\.\.\/pages\/privacy-policy\.php"/g, 'href="#/privacy-policy"');
+            bodyContent = bodyContent.replace(/href="\.\/pages\/privacy-policy\.php"/g, 'href="#/privacy-policy"');
+            bodyContent = bodyContent.replace(/href="pages\/privacy-policy\.php"/g, 'href="#/privacy-policy"');
+            bodyContent = bodyContent.replace(/href="privacy-policy\.php"/g, 'href="#/privacy-policy"');
 
             // Safeguard page
             bodyContent = bodyContent.replace(/href="\.\.\/pages\/safeguard\.html"/g, 'href="#/safeguard"');
             bodyContent = bodyContent.replace(/href="\.\/pages\/safeguard\.html"/g, 'href="#/safeguard"');
             bodyContent = bodyContent.replace(/href="pages\/safeguard\.html"/g, 'href="#/safeguard"');
             bodyContent = bodyContent.replace(/href="safeguard\.html"/g, 'href="#/safeguard"');
+            bodyContent = bodyContent.replace(/href="\.\.\/pages\/safeguard\.php"/g, 'href="#/safeguard"');
+            bodyContent = bodyContent.replace(/href="\.\/pages\/safeguard\.php"/g, 'href="#/safeguard"');
+            bodyContent = bodyContent.replace(/href="pages\/safeguard\.php"/g, 'href="#/safeguard"');
+            bodyContent = bodyContent.replace(/href="safeguard\.php"/g, 'href="#/safeguard"');
 
             // Update page title
             const newTitle = doc.querySelector('title')?.textContent || 'F Lab';

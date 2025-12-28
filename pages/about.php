@@ -32,13 +32,13 @@
 
     <?php include '../includes/navbar.php'; ?>
 
-    <!-- Spacer for fixed navbar -->
-    <div class="h-20"></div>
-
     <!-- Page Header -->
-    <section class="relative bg-gradient-to-br from-yale-blue-600 via-yale-blue-500 to-prussian-blue-800 py-20 md:py-28 overflow-hidden">
-        <!-- Tech Pattern Overlay -->
-        <div class="absolute inset-0 opacity-10" style="background-image: radial-gradient(#ffffff 1px, transparent 1px); background-size: 30px 30px;"></div>
+    <section class="relative pt-32 pb-20 overflow-hidden bg-slate-900">
+        <div class="absolute inset-0">
+            <div class="absolute inset-0 bg-gradient-to-br from-slate-900 via-blue-900/20 to-slate-900"></div>
+            <div class="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-blue-500/50 to-transparent"></div>
+            <div class="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-blue-500/20 to-transparent"></div>
+        </div>
         
         <div class="container mx-auto px-4 relative z-10">
             <div class="max-w-4xl mx-auto text-center md:text-left">
@@ -51,10 +51,6 @@
                 </p>
             </div>
         </div>
-        
-        <!-- Floating Elements -->
-        <div class="absolute top-10 right-10 w-32 h-32 bg-white/5 rounded-full blur-3xl animate-float"></div>
-        <div class="absolute bottom-10 left-10 w-48 h-48 bg-fresh-sky-500/10 rounded-full blur-3xl animate-float" style="animation-delay: 2s;"></div>
     </section>
 
     <!-- Main Content -->
@@ -204,6 +200,6 @@
 
     <?php include '../includes/footer.php'; ?>
 
-    <script src="../js/main.js"></script>
+
 </body>
 </html>

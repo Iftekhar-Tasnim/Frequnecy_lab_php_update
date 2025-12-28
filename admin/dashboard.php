@@ -4,6 +4,8 @@ $auth->requireLogin();
 
 // Get Stats
 $members_count = $pdo->query("SELECT COUNT(*) FROM team_members")->fetchColumn();
+$messages_count = $pdo->query("SELECT COUNT(*) FROM contact_messages")->fetchColumn();
+$new_messages_count = $pdo->query("SELECT COUNT(*) FROM contact_messages WHERE status = 'new'")->fetchColumn();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -22,13 +24,7 @@ $members_count = $pdo->query("SELECT COUNT(*) FROM team_members")->fetchColumn()
 
     <!-- Main Content -->
     <div class="flex-1 flex flex-col overflow-hidden">
-        <!-- Mobile Header -->
-        <header class="bg-white shadow-sm border-b border-gray-200 lg:hidden h-16 flex items-center px-4 justify-between">
-            <span class="text-xl font-bold text-gray-800">F_Lab Admin</span>
-            <button id="sidebar-open" class="text-gray-500 hover:text-gray-800">
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
-            </button>
-        </header>
+        <?php include 'includes/mobile_header.php'; ?>
 
         <!-- Main Scrollable Area -->
         <main class="flex-1 overflow-x-hidden overflow-y-auto bg-slate-50 p-4 md:p-8">
@@ -57,6 +53,33 @@ $members_count = $pdo->query("SELECT COUNT(*) FROM team_members")->fetchColumn()
                     <div class="mt-4 pt-4 border-t border-gray-50">
                         <a href="team_members.php" class="text-sm font-medium text-blue-600 hover:text-blue-700 flex items-center">
                             Manage Team <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Contact Messages Card -->
+                <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 flex flex-col justify-between hover:shadow-md transition-shadow">
+                    <div class="flex items-start justify-between mb-4">
+                        <div class="p-3 bg-green-50 rounded-lg">
+                            <svg class="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+                        </div>
+                        <?php if ($new_messages_count > 0): ?>
+                        <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-blue-100 text-blue-800">
+                            <?php echo $new_messages_count; ?> New
+                        </span>
+                        <?php else: ?>
+                        <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-green-100 text-green-800">
+                            Active
+                        </span>
+                        <?php endif; ?>
+                    </div>
+                    <div>
+                        <p class="text-sm font-medium text-slate-500">Contact Messages</p>
+                        <p class="text-3xl font-bold text-slate-900 mt-1"><?php echo $messages_count; ?></p>
+                    </div>
+                    <div class="mt-4 pt-4 border-t border-gray-50">
+                        <a href="contact_messages.php" class="text-sm font-medium text-blue-600 hover:text-blue-700 flex items-center">
+                            View Messages <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
                         </a>
                     </div>
                 </div>

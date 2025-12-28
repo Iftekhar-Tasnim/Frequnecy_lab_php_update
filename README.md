@@ -1,64 +1,112 @@
-# Frequency Lab (F_lab)
+# Frequency Lab (F_Lab)
 
-Frequency Lab is a Bangladesh-based EdTech social enterprise dedicated to nurturing a new generation of technology innovators through hands-on STEM education in Coding, Electronics, and Robotics.
+**Frequency Lab** is a Bangladesh-based EdTech social enterprise dedicated to nurturing a new generation of technology innovators through hands-on STEM education in Coding, Electronics, and Robotics.
 
-## 🚀 Technology Stack
+This repository contains the source code for the public-facing website and the custom-built **Admin Dashboard (CMS)** used to manage the site's content.
 
-- **Backend/Structure**: PHP 8.x (XAMPP Environment)
-- **Styling**: Tailwind CSS 3.x with [DaisyUI](https://daisyui.com/)
-- **Frontend Logic**: Vanilla JavaScript
-- **Typography**: 
-  - **Headings**: Exo 2 (Weights 300-800)
-  - **Body**: Inter (Weights 300-800)
-- **Icons**: Lucide-inspired SVG components
+## 🚀 Key Features
+
+### 🌐 Public Website
+-   **Modern Design**: Built with a "Cyber/Tech" aesthetic using Tailwind CSS and custom animations.
+-   **Responsive**: Fully optimized for mobile, tablet, and desktop devices.
+-   **Dynamic Pages**:
+    -   **Home**: Hero section, stats, and program highlights.
+    -   **About**: Mission, vision, and team showcase.
+    -   **Contact**: Functional contact form with email integration.
+
+### 🔐 Admin Dashboard
+A secure, custom-built CMS to manage website data without coding.
+-   **Dashboard**: Real-time stats overview.
+-   **Team Management**: Add, edit, delete, and reorder team members (Board, Executives, Advisors).
+-   **Contact Messages**: View and manage inquiries received from the website.
+-   **User Management**: Role-based access control (RBAC) for Admins and Staff.
+-   **Security**:
+    -   Secure Login with Password Hashing.
+    -   Session Security (Fixation protection, Timeout).
+    -   Role protection (Staff cannot delete content or access user management).
+    -   403 Access Denied handling.
+
+---
+
+## 🛠️ Technology Stack
+
+-   **Backend**: PHP 8.x (Vanilla, no framework)
+-   **Database**: MySQL (via PDO for security)
+-   **Frontend**: HTML5, Vanilla JavaScript
+-   **Styling**: [Tailwind CSS 3.x](https://tailwindcss.com/)
+-   **Typography**: Inter (Body), Exo 2 (Headings)
+
+---
 
 ## 📂 Project Structure
 
 ```text
-├── assets/             # Project assets (Logo, Hero images, Gallery, etc.)
+F_lab/
+├── admin/              # Secure Admin Panel source code
+│   ├── includes/       # Admin components (Sidebar, Auth, Header)
+│   ├── js/             # Admin-specific scripts
+│   ├── 403.php         # Access Denied page
+│   ├── dashboard.php   # Admin Home
+│   └── ...             # Management pages (users, team, messages)
+├── assets/             # Images, Logos, and Uploads
+├── config/             # Database configuration (db.php)
 ├── css/                # Compiled production CSS (style.css)
-├── config/             # Configuration files (db.php, etc.)
-├── js/                 # Client-side JavaScript (router.js, main.js)
-├── src/                # Source files for development
+├── includes/           # Public site shared components (Navbar, Footer, Auth)
+├── pages/              # Public website pages
+├── sql/                # Database schema and migration scripts
+├── src/                # Tailwind source files
 │   └── input.css      # Core Tailwind CSS entry point
-├── index.php           # Main entry point/Home page
-├── tailwind.config.js  # Tailwind CSS & DaisyUI configuration
-└── package.json        # NPM scripts and dependencies
+├── index.php           # Main entry point
+├── package.json        # NPM dependencies for Tailwind
+└── tailwind.config.js  # Tailwind configuration
 ```
 
-## 🛠️ Development Setup
+---
+
+## 💻 Installation & Setup
 
 ### 1. Prerequisites
-- **XAMPP** or any PHP-ready server (Apache).
-- **Node.js** (for Tailwind CSS compilation).
+-   **XAMPP** (or any PHP/MySQL environment)
+-   **Node.js** (for Tailwind CSS development)
 
-### 2. Installation
-Clone this repository into your `htdocs` directory (e.g., `C:\xampp\htdocs\F_lab`).
+### 2. Database Setup
+1.  Open phpMyAdmin.
+2.  Create a database named `f_lab_db` (or match `config/db.php`).
+3.  Import `sql/schema.sql` to set up tables.
+4.  (Optional) Import `sql/contact_messages_migration.sql` if updating from an older version.
+
+### 3. Project Configuration
+1.  Clone/Copy the project to your `htdocs` folder: `C:\xampp\htdocs\F_lab`.
+2.  Configure database credentials in `config/db.php` if needed.
+
+### 4. Build Styles (Tailwind CSS)
+The project uses Tailwind CSS. You must build the CSS file for styles to appear correct.
 
 ```bash
-cd C:\xampp\htdocs\F_lab
+# Install dependencies
 npm install
-```
 
-### 3. Tailwind CSS Compilation
-To recompile the styles during development:
-
-```bash
-# Production Build (Minified)
+# Build CSS for Production (Minified)
 npm run build
 
-# Development Watch (Real-time updates)
+# OR: Watch for changes during development
 npm run dev
 ```
 
-## 🎨 Design Guidelines
+### 5. Access the Application
+-   **Website**: [http://localhost/F_lab/](http://localhost/F_lab/)
+-   **Admin Panel**: [http://localhost/F_lab/admin/](http://localhost/F_lab/admin/)
 
-- **Primary Colors**: 
-  - `yale-blue` (#1f9de0)
-  - `prussian-blue` (#0a111a)
-  - `fresh-sky` (#19a5e6)
-  - `platinum` (#eef3f6)
-- **Vibe**: Modern, Premium, High-Tech, Socially Impactful.
+---
+
+## 🔒 Access Control (RBAC)
+
+| Role | Permissions |
+| :--- | :--- |
+| **Admin** | Full access. Can create/delete users, delete content, and manage all settings. |
+| **Staff** | Restricted access. Can view/add/edit content (Team, Messages) but **cannot delete** items or manage users. |
+
+---
 
 ## 📄 License
-© 2024 Frequency Lab. All rights reserved.
+© 2025 Frequency Lab. All rights reserved.
