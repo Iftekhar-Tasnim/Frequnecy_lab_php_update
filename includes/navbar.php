@@ -10,7 +10,7 @@
     $base = $path;
     $current_page = basename($_SERVER['PHP_SELF']);
     ?>
-    <div id="navbar-bg" class="absolute inset-0 bg-prussian-blue-950/80 backdrop-blur-xl border-b border-white/5 opacity-100"></div>
+    <div id="navbar-bg" class="absolute inset-0 bg-prussian-blue-950 backdrop-blur-xl border-b border-white/5 opacity-100"></div>
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
         <div class="flex items-center justify-between h-20">
             <!-- Left: Logo -->

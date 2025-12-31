@@ -79,7 +79,7 @@
         <!-- Copyright Bar -->
         <div class="pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-6">
             <p class="text-platinum-500 text-[10px] uppercase tracking-[0.2em] font-bold">
-                &copy; 2024 <span class="text-white">Frequency Lab</span>. All rights reserved.
+                &copy; 2025 <span class="text-white">Frequency Lab</span>. All rights reserved.
             </p>
             <div class="flex items-center gap-6 text-[10px] uppercase tracking-[0.2em] font-bold">
                 <a href="#/privacy-policy" class="text-platinum-500 hover:text-white transition-colors">Privacy Policy</a>
