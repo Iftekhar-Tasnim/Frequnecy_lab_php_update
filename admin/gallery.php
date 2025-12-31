@@ -30,40 +30,50 @@ if (isset($_POST['delete_id'])) {
 
 // Fetch Images
 $search = $_GET['search'] ?? '';
-$category_filter = $_GET['category'] ?? '';
+$programme_filter = $_GET['programme_id'] ?? '';
 $search_query = "";
 $params = [];
 
 $where_clauses = [];
 
 if (!empty($search)) {
-    $where_clauses[] = "(title LIKE ? OR description LIKE ?)";
+    $where_clauses[] = "(g.title LIKE ? OR g.description LIKE ? OR p.title LIKE ?)";
+    $params[] = "%$search%";
     $params[] = "%$search%";
     $params[] = "%$search%";
 }
 
-if (!empty($category_filter)) {
-    $where_clauses[] = "event_category = ?";
-    $params[] = $category_filter;
+if (!empty($programme_filter)) {
+    $where_clauses[] = "g.programme_id = ?";
+    $params[] = $programme_filter;
 }
 
 if (!empty($where_clauses)) {
     $search_query = "WHERE " . implode(' AND ', $where_clauses);
 }
 
-$stmt = $pdo->prepare("SELECT * FROM gallery_images $search_query ORDER BY upload_date DESC");
+$stmt = $pdo->prepare("
+    SELECT g.*, p.title as programme_title, p.type as programme_type 
+    FROM gallery_images g
+    LEFT JOIN programmes p ON g.programme_id = p.id 
+    $search_query 
+    ORDER BY g.upload_date DESC
+");
 $stmt->execute($params);
 $images = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-function getCategoryBadgeClass($cat) {
-    switch ($cat) {
-        case 'workshops': return 'bg-cyan-100 text-cyan-800 border-cyan-200';
-        case 'events': return 'bg-purple-100 text-purple-800 border-purple-200';
-        case 'competitions': return 'bg-orange-100 text-orange-800 border-orange-200';
+function getCategoryBadgeClass($type) {
+    switch ($type) {
+        case 'workshop': return 'bg-cyan-100 text-cyan-800 border-cyan-200';
+        case 'event': return 'bg-purple-100 text-purple-800 border-purple-200';
+        case 'competition': return 'bg-orange-100 text-orange-800 border-orange-200';
         case 'community': return 'bg-green-100 text-green-800 border-green-200';
         default: return 'bg-gray-100 text-gray-800 border-gray-200';
     }
 }
+
+// Fetch All Programmes for Filter
+$allProgrammes = $pdo->query("SELECT id, title FROM programmes ORDER BY title ASC")->fetchAll();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -92,17 +102,18 @@ function getCategoryBadgeClass($cat) {
                 </div>
                 
                 <div class="flex flex-col sm:flex-row gap-3 w-full sm:w-auto">
-                    <!-- Category Filter -->
+                    <!-- Programme Filter -->
                     <form method="GET" class="flex gap-2">
-                        <select name="category" onchange="this.form.submit()" class="block w-full sm:w-40 py-2.5 px-3 border border-gray-300 bg-white rounded-lg shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
-                            <option value="">All Categories</option>
-                            <option value="workshops" <?php echo $category_filter == 'workshops' ? 'selected' : ''; ?>>Workshops</option>
-                            <option value="events" <?php echo $category_filter == 'events' ? 'selected' : ''; ?>>Events</option>
-                            <option value="competitions" <?php echo $category_filter == 'competitions' ? 'selected' : ''; ?>>Competitions</option>
-                            <option value="community" <?php echo $category_filter == 'community' ? 'selected' : ''; ?>>Community</option>
+                        <select name="programme_id" onchange="this.form.submit()" class="block w-full sm:w-64 py-2.5 px-3 border border-gray-300 bg-white rounded-lg shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+                            <option value="">All Programmes</option>
+                            <?php foreach ($allProgrammes as $p): ?>
+                                <option value="<?php echo $p['id']; ?>" <?php echo $programme_filter == $p['id'] ? 'selected' : ''; ?>>
+                                    <?php echo htmlspecialchars($p['title']); ?>
+                                </option>
+                            <?php endforeach; ?>
                         </select>
                         <!-- Preserve search if exists -->
-                         <input type="hidden" name="search" value="<?php echo htmlspecialchars($search); ?>">
+                        <input type="hidden" name="search" value="<?php echo htmlspecialchars($search); ?>">
                     </form>
 
 
@@ -168,11 +179,12 @@ function getCategoryBadgeClass($cat) {
                                 </td>
                                 <td class="px-6 py-4">
                                     <div class="text-sm font-semibold text-gray-900 group-hover:text-blue-600 transition-colors"><?php echo htmlspecialchars($img['title']); ?></div>
-                                    <div class="text-xs text-gray-500 mt-1 line-clamp-1 max-w-xs"><?php echo htmlspecialchars($img['description']); ?></div>
+                                    <div class="text-xs text-blue-500 mt-0.5">Prog: <?php echo htmlspecialchars($img['programme_title'] ?? 'N/A'); ?></div>
+                                    <div class="text-xs text-gray-400 mt-1 line-clamp-1 max-w-xs"><?php echo htmlspecialchars($img['description']); ?></div>
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap">
-                                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium border <?php echo getCategoryBadgeClass($img['event_category']); ?>">
-                                        <?php echo ucfirst($img['event_category']); ?>
+                                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium border <?php echo getCategoryBadgeClass($img['programme_type'] ?? ''); ?>">
+                                        <?php echo ucfirst($img['programme_type'] ?? 'General'); ?>
                                     </span>
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">

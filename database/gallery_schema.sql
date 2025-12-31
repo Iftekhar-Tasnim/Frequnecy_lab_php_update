@@ -4,7 +4,7 @@ CREATE TABLE IF NOT EXISTS gallery_images (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `image_path` varchar(255) NOT NULL,
   `title` varchar(100) DEFAULT NULL,
-  `event_category` varchar(50) NOT NULL, -- workshops, events, community, competitions
+  `programme_id` int(11) DEFAULT NULL,
   `description` text,
   `upload_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)

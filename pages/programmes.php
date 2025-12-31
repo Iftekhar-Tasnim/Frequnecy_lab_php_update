@@ -1,3 +1,28 @@
+<?php 
+require_once '../config/db.php';
+
+// Fetch all programmes
+$stmt = $pdo->query("SELECT * FROM programmes ORDER BY start_date DESC, created_at DESC");
+$programmes = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+function getProgrammeStyle($title, $type) {
+    $title = strtolower($title);
+    if (strpos($title, 'after-school') !== false) return ['color' => 'blue', 'icon' => 'M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253'];
+    if (strpos($title, 'weekend') !== false) return ['color' => 'cyan', 'icon' => 'M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z'];
+    if (strpos($title, 'community') !== false) return ['color' => 'emerald', 'icon' => 'M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z'];
+    if (strpos($title, 'robotics') !== false || strpos($title, 'club') !== false) return ['color' => 'violet', 'icon' => 'M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z'];
+    if (strpos($title, 'workshop') !== false || strpos($title, 'training') !== false) return ['color' => 'amber', 'icon' => 'M19.428 15.428a2 2 0 00-1.022-.547l-2.384-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z'];
+    if (strpos($title, 'stem') !== false) return ['color' => 'rose', 'icon' => 'M19.428 15.428a2 2 0 00-1.022-.547l-2.384-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z'];
+    
+    // Default styles based on type
+    switch ($type) {
+        case 'workshop': return ['color' => 'blue', 'icon' => 'M19.428 15.428a2 2 0 00-1.022-.547l-2.384-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z'];
+        case 'competition': return ['color' => 'rose', 'icon' => 'M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z'];
+        case 'community': return ['color' => 'emerald', 'icon' => 'M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z'];
+        default: return ['color' => 'indigo', 'icon' => 'M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z'];
+    }
+}
+?>
 <!DOCTYPE html>
 <html lang="en" data-theme="f-lab">
 <head>
@@ -44,209 +69,71 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             
-            <!-- Card 1: After-School -->
-            <div class="group relative bg-white rounded-2xl p-8 shadow-sm hover:shadow-xl transition-all duration-300 border border-slate-200 hover:-translate-y-1 overflow-hidden">
-                <div class="absolute top-0 left-0 w-1 h-full bg-blue-500 transform origin-top scale-y-0 group-hover:scale-y-100 transition-transform duration-300"></div>
+            <?php foreach ($programmes as $prog): 
+                if ($prog['title'] === 'General Moments') continue; // Hide general gallery from programmes list
+                $style = getProgrammeStyle($prog['title'], $prog['type']);
+                $color = $style['color'];
+                $icon = $style['icon'];
                 
-                <div class="h-12 w-12 bg-blue-50 rounded-lg flex items-center justify-center mb-6 text-blue-600">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg>
+                // Tailwind color map because dynamic classes like bg-{$color}-500 don't work with JIT well if not safelisted
+                $colorClasses = [
+                    'blue' => ['bg' => 'bg-blue-50', 'text' => 'text-blue-600', 'border' => 'bg-blue-500', 'hover' => 'group-hover:text-blue-600', 'accent' => 'text-blue-500'],
+                    'cyan' => ['bg' => 'bg-cyan-50', 'text' => 'text-cyan-600', 'border' => 'bg-cyan-500', 'hover' => 'group-hover:text-cyan-600', 'accent' => 'text-cyan-500'],
+                    'emerald' => ['bg' => 'bg-emerald-50', 'text' => 'text-emerald-600', 'border' => 'bg-emerald-500', 'hover' => 'group-hover:text-emerald-600', 'accent' => 'text-emerald-500'],
+                    'violet' => ['bg' => 'bg-violet-50', 'text' => 'text-violet-600', 'border' => 'bg-violet-500', 'hover' => 'group-hover:text-violet-600', 'accent' => 'text-violet-500'],
+                    'amber' => ['bg' => 'bg-amber-50', 'text' => 'text-amber-600', 'border' => 'bg-amber-500', 'hover' => 'group-hover:text-amber-600', 'accent' => 'text-amber-500'],
+                    'rose' => ['bg' => 'bg-rose-50', 'text' => 'text-rose-600', 'border' => 'bg-rose-500', 'hover' => 'group-hover:text-rose-600', 'accent' => 'text-rose-500'],
+                    'indigo' => ['bg' => 'bg-indigo-50', 'text' => 'text-indigo-600', 'border' => 'bg-indigo-500', 'hover' => 'group-hover:text-indigo-600', 'accent' => 'text-indigo-500']
+                ];
+                $classes = $colorClasses[$color] ?? $colorClasses['indigo'];
+            ?>
+            <!-- Dynamic Card: <?php echo htmlspecialchars($prog['title']); ?> -->
+            <div class="group relative bg-white rounded-2xl p-8 shadow-sm hover:shadow-xl transition-all duration-300 border border-slate-200 hover:-translate-y-1 overflow-hidden">
+                <div class="absolute top-0 left-0 w-1 h-full <?php echo $classes['border']; ?> transform origin-top scale-y-0 group-hover:scale-y-100 transition-transform duration-300"></div>
+                
+                <div class="h-12 w-12 <?php echo $classes['bg']; ?> rounded-lg flex items-center justify-center mb-6 <?php echo $classes['text']; ?>">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="<?php echo $icon; ?>"></path></svg>
                 </div>
                 
-                <h3 class="text-xl font-bold text-slate-900 mb-3 group-hover:text-blue-600 transition-colors">After-School Program</h3>
+                <h3 class="text-xl font-bold text-slate-900 mb-3 <?php echo $classes['hover']; ?> transition-colors"><?php echo htmlspecialchars($prog['title']); ?></h3>
                 <p class="text-slate-600 text-sm leading-relaxed mb-6">
-                    Specialized technology learning sessions after regular school hours, packed with hands-on coding, electronics, and robotics experiences.
+                    <?php echo htmlspecialchars($prog['description']); ?>
                 </p>
                 
+                <!-- Display dynamic highlights -->
+                <?php if (!empty($prog['highlight1']) || !empty($prog['highlight2']) || !empty($prog['highlight3'])): ?>
                 <ul class="space-y-3 mb-8">
+                    <?php if ($prog['highlight1']): ?>
                     <li class="flex items-start text-sm text-slate-500">
-                        <svg class="w-5 h-5 text-blue-500 mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
-                        Daily 90-minute cohorts
+                        <svg class="w-5 h-5 <?php echo $classes['accent']; ?> mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                        <?php echo htmlspecialchars($prog['highlight1']); ?>
                     </li>
+                    <?php endif; ?>
+                    <?php if ($prog['highlight2']): ?>
                     <li class="flex items-start text-sm text-slate-500">
-                        <svg class="w-5 h-5 text-blue-500 mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
-                        Mini projects every week
+                        <svg class="w-5 h-5 <?php echo $classes['accent']; ?> mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                        <?php echo htmlspecialchars($prog['highlight2']); ?>
                     </li>
+                    <?php endif; ?>
+                    <?php if ($prog['highlight3']): ?>
                     <li class="flex items-start text-sm text-slate-500">
-                        <svg class="w-5 h-5 text-blue-500 mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
-                        Ideal for Grades 4-10
+                        <svg class="w-5 h-5 <?php echo $classes['accent']; ?> mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                        <?php echo htmlspecialchars($prog['highlight3']); ?>
                     </li>
+                    <?php endif; ?>
                 </ul>
+                <?php endif; ?>
 
-                <a href="contact.php" class="inline-flex items-center text-sm font-semibold text-blue-600 hover:text-blue-700 transition-colors group/link">
-                    Join Waitlist
+                <a href="contact.php" class="inline-flex items-center text-sm font-semibold <?php echo $classes['accent']; ?> hover:opacity-80 transition-colors group/link">
+                    Join Now
                     <svg class="w-4 h-4 ml-1 transform group-hover/link:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
                 </a>
             </div>
+            <?php endforeach; ?>
 
-            <!-- Card 2: Weekend -->
-            <div class="group relative bg-white rounded-2xl p-8 shadow-sm hover:shadow-xl transition-all duration-300 border border-slate-200 hover:-translate-y-1 overflow-hidden">
-                <div class="absolute top-0 left-0 w-1 h-full bg-cyan-500 transform origin-top scale-y-0 group-hover:scale-y-100 transition-transform duration-300"></div>
-                
-                <div class="h-12 w-12 bg-cyan-50 rounded-lg flex items-center justify-center mb-6 text-cyan-600">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                </div>
-                
-                <h3 class="text-xl font-bold text-slate-900 mb-3 group-hover:text-cyan-600 transition-colors">Weekend Program</h3>
-                <p class="text-slate-600 text-sm leading-relaxed mb-6">
-                    Flexible weekend sessions deepen STEM learning through project-based activities, teamwork, and innovation challenges.
-                </p>
-                
-                <ul class="space-y-3 mb-8">
-                    <li class="flex items-start text-sm text-slate-500">
-                        <svg class="w-5 h-5 text-cyan-500 mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
-                        Saturday & Sunday batches
-                    </li>
-                    <li class="flex items-start text-sm text-slate-500">
-                        <svg class="w-5 h-5 text-cyan-500 mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
-                        Project showcases quarterly
-                    </li>
-                    <li class="flex items-start text-sm text-slate-500">
-                        <svg class="w-5 h-5 text-cyan-500 mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
-                        Focus on critical thinking
-                    </li>
-                </ul>
-
-                <a href="contact.php" class="inline-flex items-center text-sm font-semibold text-cyan-600 hover:text-cyan-700 transition-colors group/link">
-                    Enroll Now
-                    <svg class="w-4 h-4 ml-1 transform group-hover/link:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
-                </a>
-            </div>
-
-            <!-- Card 3: Community -->
-            <div class="group relative bg-white rounded-2xl p-8 shadow-sm hover:shadow-xl transition-all duration-300 border border-slate-200 hover:-translate-y-1 overflow-hidden">
-                <div class="absolute top-0 left-0 w-1 h-full bg-emerald-500 transform origin-top scale-y-0 group-hover:scale-y-100 transition-transform duration-300"></div>
-                
-                <div class="h-12 w-12 bg-emerald-50 rounded-lg flex items-center justify-center mb-6 text-emerald-600">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
-                </div>
-                
-                <h3 class="text-xl font-bold text-slate-900 mb-3 group-hover:text-emerald-600 transition-colors">Community Program</h3>
-                <p class="text-slate-600 text-sm leading-relaxed mb-6">
-                    Localized learning initiatives bring STEM education directly to communities, especially in underserved areas that need access most.
-                </p>
-                
-                <ul class="space-y-3 mb-8">
-                    <li class="flex items-start text-sm text-slate-500">
-                        <svg class="w-5 h-5 text-emerald-500 mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
-                        Pop-up labs & mobile kits
-                    </li>
-                    <li class="flex items-start text-sm text-slate-500">
-                        <svg class="w-5 h-5 text-emerald-500 mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
-                        Parent-community engagement
-                    </li>
-                    <li class="flex items-start text-sm text-slate-500">
-                        <svg class="w-5 h-5 text-emerald-500 mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
-                        Context-aware curriculum
-                    </li>
-                </ul>
-
-                <a href="contact.php" class="inline-flex items-center text-sm font-semibold text-emerald-600 hover:text-emerald-700 transition-colors group/link">
-                    Partner With Us
-                    <svg class="w-4 h-4 ml-1 transform group-hover/link:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
-                </a>
-            </div>
-
-            <!-- Card 4: Robotics Club -->
-            <div class="group relative bg-white rounded-2xl p-8 shadow-sm hover:shadow-xl transition-all duration-300 border border-slate-200 hover:-translate-y-1 overflow-hidden">
-                <div class="absolute top-0 left-0 w-1 h-full bg-violet-500 transform origin-top scale-y-0 group-hover:scale-y-100 transition-transform duration-300"></div>
-                
-                <div class="h-12 w-12 bg-violet-50 rounded-lg flex items-center justify-center mb-6 text-violet-600">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
-                </div>
-                
-                <h3 class="text-xl font-bold text-slate-900 mb-3 group-hover:text-violet-600 transition-colors">Robotics / Coding Club</h3>
-                <p class="text-slate-600 text-sm leading-relaxed mb-6">
-                    A dynamic club where students collaborate, innovate, and compete while building real-world robotics and coding projects.
-                </p>
-                
-                <ul class="space-y-3 mb-8">
-                    <li class="flex items-start text-sm text-slate-500">
-                        <svg class="w-5 h-5 text-violet-500 mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
-                        Seasonal competitions
-                    </li>
-                    <li class="flex items-start text-sm text-slate-500">
-                        <svg class="w-5 h-5 text-violet-500 mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
-                        Peer mentoring pods
-                    </li>
-                    <li class="flex items-start text-sm text-slate-500">
-                        <svg class="w-5 h-5 text-violet-500 mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
-                        Access to advanced kits
-                    </li>
-                </ul>
-
-                <a href="contact.php" class="inline-flex items-center text-sm font-semibold text-violet-600 hover:text-violet-700 transition-colors group/link">
-                    Join the Club
-                    <svg class="w-4 h-4 ml-1 transform group-hover/link:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
-                </a>
-            </div>
-
-            <!-- Card 5: Workshop -->
-            <div class="group relative bg-white rounded-2xl p-8 shadow-sm hover:shadow-xl transition-all duration-300 border border-slate-200 hover:-translate-y-1 overflow-hidden">
-                <div class="absolute top-0 left-0 w-1 h-full bg-amber-500 transform origin-top scale-y-0 group-hover:scale-y-100 transition-transform duration-300"></div>
-                
-                <div class="h-12 w-12 bg-amber-50 rounded-lg flex items-center justify-center mb-6 text-amber-600">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.384-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"></path></svg>
-                </div>
-                
-                <h3 class="text-xl font-bold text-slate-900 mb-3 group-hover:text-amber-600 transition-colors">Workshop / Training</h3>
-                <p class="text-slate-600 text-sm leading-relaxed mb-6">
-                    Short-term, focused workshops on STEM topics such as IoT device building, AI basics, and robotics to accelerate skills quickly.
-                </p>
-                
-                <ul class="space-y-3 mb-8">
-                    <li class="flex items-start text-sm text-slate-500">
-                        <svg class="w-5 h-5 text-amber-500 mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
-                        1-3 day intensives
-                    </li>
-                    <li class="flex items-start text-sm text-slate-500">
-                        <svg class="w-5 h-5 text-amber-500 mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
-                        Industry expert mentors
-                    </li>
-                    <li class="flex items-start text-sm text-slate-500">
-                        <svg class="w-5 h-5 text-amber-500 mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
-                        Certification on completion
-                    </li>
-                </ul>
-
-                <a href="contact.php" class="inline-flex items-center text-sm font-semibold text-amber-600 hover:text-amber-700 transition-colors group/link">
-                    View Schedule
-                    <svg class="w-4 h-4 ml-1 transform group-hover/link:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
-                </a>
-            </div>
-
-            <!-- Card 6: STEM -->
-            <div class="group relative bg-white rounded-2xl p-8 shadow-sm hover:shadow-xl transition-all duration-300 border border-slate-200 hover:-translate-y-1 overflow-hidden">
-                <div class="absolute top-0 left-0 w-1 h-full bg-rose-500 transform origin-top scale-y-0 group-hover:scale-y-100 transition-transform duration-300"></div>
-                
-                <div class="h-12 w-12 bg-rose-50 rounded-lg flex items-center justify-center mb-6 text-rose-600">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.384-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"></path></svg>
-                </div>
-                
-                <h3 class="text-xl font-bold text-slate-900 mb-3 group-hover:text-rose-600 transition-colors">STEM Program</h3>
-                <p class="text-slate-600 text-sm leading-relaxed mb-6">
-                    A structured curriculum offering comprehensive Science, Technology, Engineering, and Mathematics education through interactive problem solving.
-                </p>
-                
-                <ul class="space-y-3 mb-8">
-                    <li class="flex items-start text-sm text-slate-500">
-                        <svg class="w-5 h-5 text-rose-500 mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
-                        Semester-aligned modules
-                    </li>
-                    <li class="flex items-start text-sm text-slate-500">
-                        <svg class="w-5 h-5 text-rose-500 mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
-                        Real-world design challenges
-                    </li>
-                    <li class="flex items-start text-sm text-slate-500">
-                        <svg class="w-5 h-5 text-rose-500 mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
-                        Continuous assessment
-                    </li>
-                </ul>
-
-                <a href="contact.php" class="inline-flex items-center text-sm font-semibold text-rose-600 hover:text-rose-700 transition-colors group/link">
-                    Get Details
-                    <svg class="w-4 h-4 ml-1 transform group-hover/link:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
-                </a>
-            </div>
+        </div>
+    </div>
+</section>
 
         </div>
     </div>

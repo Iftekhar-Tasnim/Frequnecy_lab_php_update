@@ -8,7 +8,9 @@ $id = '';
 $title = '';
 $type = 'event'; // default
 $description = '';
-$start_date = '';
+$highlight1 = '';
+$highlight2 = '';
+$highlight3 = '';
 $error_msg = '';
 $success_msg = '';
 
@@ -28,7 +30,9 @@ if (isset($_GET['id'])) {
     $title = $prog['title'];
     $type = $prog['type'];
     $description = $prog['description'];
-    $start_date = $prog['start_date'];
+    $highlight1 = $prog['highlight1'];
+    $highlight2 = $prog['highlight2'];
+    $highlight3 = $prog['highlight3'];
 }
 
 // Handle Form Submission
@@ -36,7 +40,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $title = trim($_POST['title']);
     $type = $_POST['type'];
     $description = trim($_POST['description']);
-    $start_date = !empty($_POST['start_date']) ? $_POST['start_date'] : null;
+    $highlight1 = trim($_POST['highlight1']);
+    $highlight2 = trim($_POST['highlight2']);
+    $highlight3 = trim($_POST['highlight3']);
     
     // Validation
     if (empty($title)) {
@@ -44,12 +50,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     } else {
         try {
             if ($is_edit) {
-                $stmt = $pdo->prepare("UPDATE programmes SET title=?, type=?, description=?, start_date=? WHERE id=?");
-                $stmt->execute([$title, $type, $description, $start_date, $id]);
+                $stmt = $pdo->prepare("UPDATE programmes SET title=?, type=?, description=?, highlight1=?, highlight2=?, highlight3=? WHERE id=?");
+                $stmt->execute([$title, $type, $description, $highlight1, $highlight2, $highlight3, $id]);
                 $success_msg = "Programme updated successfully!";
             } else {
-                $stmt = $pdo->prepare("INSERT INTO programmes (title, type, description, start_date) VALUES (?, ?, ?, ?)");
-                $stmt->execute([$title, $type, $description, $start_date]);
+                $stmt = $pdo->prepare("INSERT INTO programmes (title, type, description, highlight1, highlight2, highlight3) VALUES (?, ?, ?, ?, ?, ?)");
+                $stmt->execute([$title, $type, $description, $highlight1, $highlight2, $highlight3]);
                 header('Location: programmes.php');
                 exit;
             }
@@ -129,10 +135,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         </div>
                     </div>
 
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-2">Start Date</label>
-                        <input type="date" name="start_date" value="<?php echo htmlspecialchars($start_date ?? ''); ?>" 
-                               class="w-full px-4 py-2.5 bg-gray-50 border border-gray-300 rounded-lg focus:bg-white focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all">
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Highlight 1</label>
+                            <input type="text" name="highlight1" value="<?php echo htmlspecialchars($highlight1); ?>" 
+                                   class="w-full px-4 py-2.5 bg-gray-50 border border-gray-300 rounded-lg focus:bg-white focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all"
+                                   placeholder="e.g. Daily cohorts">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Highlight 2</label>
+                            <input type="text" name="highlight2" value="<?php echo htmlspecialchars($highlight2); ?>" 
+                                   class="w-full px-4 py-2.5 bg-gray-50 border border-gray-300 rounded-lg focus:bg-white focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all"
+                                   placeholder="e.g. Hands-on projects">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Highlight 3</label>
+                            <input type="text" name="highlight3" value="<?php echo htmlspecialchars($highlight3); ?>" 
+                                   class="w-full px-4 py-2.5 bg-gray-50 border border-gray-300 rounded-lg focus:bg-white focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all"
+                                   placeholder="e.g. Certification">
+                        </div>
                     </div>
                     
                     <div>

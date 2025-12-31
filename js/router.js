@@ -455,11 +455,11 @@ class Router {
             initializeTestimonialsSlider();
         }
 
-        // Initialize gallery lightbox if on gallery page
+        // Initialize dynamic gallery if on gallery page
         if (this.currentRoute === '/gallery') {
             setTimeout(() => {
-                if (typeof window.initGallery === 'function') {
-                    window.initGallery();
+                if (typeof window.initializeDynamicGallery === 'function') {
+                    window.initializeDynamicGallery();
                 }
             }, 100);
         }
