@@ -9,7 +9,7 @@ mkdir "deploy_temp"
 echo Copying files...
 xcopy "admin" "deploy_temp\admin" /s /e /i /y
 xcopy "assets" "deploy_temp\assets" /s /e /i /y
-xcopy "config" "deploy_temp\config" /s /e /i /y
+
 xcopy "css" "deploy_temp\css" /s /e /i /y
 xcopy "includes" "deploy_temp\includes" /s /e /i /y
 xcopy "js" "deploy_temp\js" /s /e /i /y

@@ -145,7 +145,9 @@ class Router {
 
     async handleRoute() {
         // Get route from hash or pathname
-        let route = window.location.hash.substring(1) || '/';
+        let fullRoute = window.location.hash.substring(1) || '/';
+        // Strip query parameters for matching
+        let route = fullRoute.split('?')[0];
 
         // Fallback to pathname if no hash and not on index.html
         if (route === '/' && window.location.pathname !== '/' && window.location.pathname !== '/index.html') {
@@ -233,7 +235,14 @@ class Router {
             this.showLoading();
 
             // Fetch the page content
-            const response = await fetch(filePath);
+            // Append query string if present in the route/hash
+            const [path, queryString] = window.location.hash.slice(1).split('?');
+            let fetchUrl = filePath + '?v=' + new Date().getTime();
+            if (queryString) {
+                fetchUrl += '&' + queryString;
+            }
+
+            const response = await fetch(fetchUrl);
             if (!response.ok) {
                 throw new Error(`Failed to load page: ${response.status}`);
             }
