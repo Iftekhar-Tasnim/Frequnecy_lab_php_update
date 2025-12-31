@@ -25,14 +25,8 @@ header('Content-Type: application/json');
 // Include database connection
 require_once __DIR__ . '/config/db.php';
 
-// SMTP Configuration
-define('SMTP_HOST', 'mail.flabbd.com'); // cPanel default SMTP
-define('SMTP_PORT', 587); // or 465 for SSL
-define('SMTP_USERNAME', 'support@flabbd.com');
-define('SMTP_PASSWORD', 'support@flabbd2025');
-define('SMTP_FROM_EMAIL', 'support@flabbd.com');
-define('SMTP_FROM_NAME', 'Frequency Lab Contact Form');
-define('SMTP_TO_EMAIL', 'support@flabbd.com');
+// Contact form processing only saves to database
+// SMTP configuration removed
 
 /**
  * Send JSON response and exit

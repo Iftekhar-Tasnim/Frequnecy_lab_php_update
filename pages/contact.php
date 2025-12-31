@@ -191,7 +191,7 @@
                                         type="text" 
                                         id="contact-name"
                                         name="name"
-                                        placeholder="John Doe" 
+                                        placeholder="Your Name" 
                                         class="w-full px-4 py-3 bg-white border-2 border-platinum-200 rounded-lg focus:border-yale-blue-500 focus:outline-none transition-colors duration-300"
                                         required 
                                         aria-required="true"
@@ -210,7 +210,7 @@
                                             type="email" 
                                             id="contact-email"
                                             name="email"
-                                            placeholder="john@example.com" 
+                                            placeholder="you@example.com" 
                                             class="w-full px-4 py-3 bg-white border-2 border-platinum-200 rounded-lg focus:border-yale-blue-500 focus:outline-none transition-colors duration-300"
                                             required 
                                             aria-required="true"
