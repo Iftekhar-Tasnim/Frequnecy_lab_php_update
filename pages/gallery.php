@@ -16,11 +16,13 @@
 require_once '../config/db.php';
 
 // Fetch images from database with their programme title
+// Fetch images from database with their programme title
 $stmt = $pdo->query("
     SELECT g.*, p.title as programme_title 
     FROM gallery_images g
     LEFT JOIN programmes p ON g.programme_id = p.id 
     ORDER BY g.upload_date DESC
+    LIMIT 12
 ");
 $gallery_items = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
@@ -82,6 +84,11 @@ $gallery_items = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     </div>
                 </div>
             <?php endforeach; ?>
+        </div>
+
+        <!-- Loader for Infinite Scroll -->
+        <div id="gallery-loader" class="text-center py-12 hidden">
+            <div class="inline-block animate-spin rounded-full h-8 w-8 border-4 border-yale-blue-500 border-t-transparent"></div>
         </div>
 
         <!-- No Results Message -->

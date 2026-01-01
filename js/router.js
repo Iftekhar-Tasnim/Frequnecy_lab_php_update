@@ -473,6 +473,13 @@ class Router {
             }, 100);
         }
 
+        // Initialize contact form if on contact page
+        if (this.currentRoute === '/contact') {
+            if (typeof window.initializeContactForm === 'function') {
+                window.initializeContactForm();
+            }
+        }
+
 
 
         // Links are already intercepted via event delegation, no need to re-intercept

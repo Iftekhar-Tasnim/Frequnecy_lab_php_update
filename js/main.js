@@ -462,98 +462,150 @@ function initializeTestimonialsSlider() {
 }
 
 // Initialize dynamic gallery filtering and lightbox
+// Initialize dynamic gallery filtering and lightbox
 window.initializeDynamicGallery = function () {
-    // Filter Logic
+    const galleryGrid = document.getElementById('gallery-grid');
     const filterBtns = document.querySelectorAll('.filter-btn');
-    const galleryItems = document.querySelectorAll('.gallery-item');
     const noResults = document.getElementById('no-results');
+    const loader = document.getElementById('gallery-loader');
 
-    if (filterBtns.length === 0 || galleryItems.length === 0) return;
+    // Lightbox Elements
+    const lightbox = document.getElementById('lightbox');
+    const lightboxImg = document.getElementById('lightbox-img');
+    const closeBtn = document.getElementById('lightbox-close');
 
+    if (!galleryGrid || !filterBtns.length) return;
+
+    // State
+    let currentPage = 1;
+    let currentCategory = 'all';
+    let isLoading = false;
+    let hasMore = true;
+
+    // Check initial state (if less than 12 items, no more pages)
+    const initialItems = galleryGrid.querySelectorAll('.gallery-item').length;
+    if (initialItems < 12) {
+        hasMore = false;
+        if (loader) loader.classList.add('hidden');
+    } else {
+        if (loader) loader.classList.remove('hidden');
+    }
+
+    // Function to load images
+    const loadImages = async (reset = false) => {
+        if (isLoading || (!hasMore && !reset)) return;
+
+        isLoading = true;
+        // Don't show loader validation here, rely on Sentinel/Observer visibility or just keep it simple
+
+        const targetPage = reset ? 1 : currentPage + 1;
+        const url = `api/get_gallery_images.php?page=${targetPage}&limit=12&category=${encodeURIComponent(currentCategory)}`;
+
+        try {
+            const res = await fetch(url);
+            const data = await res.json();
+
+            if (data.status === 'success') {
+                if (reset) {
+                    galleryGrid.innerHTML = data.html;
+                    currentPage = 1;
+                } else {
+                    galleryGrid.insertAdjacentHTML('beforeend', data.html); // Efficient append
+                    currentPage = targetPage;
+                }
+
+                hasMore = data.has_more;
+
+                // Toggle No Results
+                if (data.count === 0 && reset) {
+                    if (noResults) noResults.classList.remove('hidden');
+                } else {
+                    if (noResults) noResults.classList.add('hidden');
+                }
+
+                // Manage Loader Visibility
+                if (loader) {
+                    if (!hasMore) {
+                        loader.classList.add('hidden');
+                    } else {
+                        loader.classList.remove('hidden');
+                    }
+                }
+            }
+        } catch (error) {
+            console.error('Error loading gallery:', error);
+        } finally {
+            isLoading = false;
+        }
+    };
+
+    // Intersection Observer for Infinite Scroll
+    if (loader) {
+        const observer = new IntersectionObserver((entries) => {
+            const entry = entries[0];
+            if (entry.isIntersecting && hasMore && !isLoading) {
+                loadImages(false);
+            }
+        }, { rootMargin: '200px' }); // Load before user hits bottom
+        observer.observe(loader);
+    }
+
+    // Filter Logic
     filterBtns.forEach(btn => {
         btn.addEventListener('click', () => {
-            // Remove active class from all
+            // UI Updates
             filterBtns.forEach(b => {
                 b.classList.remove('bg-yale-blue-600', 'text-white', 'shadow-lg');
                 b.classList.add('bg-white', 'text-slate-600');
             });
-            // Add active class to clicked
             btn.classList.remove('bg-white', 'text-slate-600');
             btn.classList.add('bg-yale-blue-600', 'text-white', 'shadow-lg');
 
-            const filterValue = btn.getAttribute('data-filter');
-            let visibleCount = 0;
+            // Logic Updates
+            currentCategory = btn.getAttribute('data-filter');
+            hasMore = true; // Reset hasMore assumption
+            if (loader) loader.classList.remove('hidden'); // Show loader
+            if (noResults) noResults.classList.add('hidden');
 
-            galleryItems.forEach(item => {
-                if (filterValue === 'all' || item.getAttribute('data-category') === filterValue) {
-                    item.classList.remove('hidden');
-                    item.style.opacity = '1';
-                    item.style.transform = 'scale(1)';
-                    visibleCount++;
-                } else {
-                    item.classList.add('hidden');
-                    item.style.opacity = '0';
-                    item.style.transform = 'scale(0.95)';
+            // Clear Grid and Load
+            galleryGrid.innerHTML = ''; // Immediate clear for UX
+            loadImages(true);
+        });
+    });
+
+    // Lightbox Logic (Event Delegation)
+    if (lightbox && lightboxImg) {
+        galleryGrid.addEventListener('click', (e) => {
+            const item = e.target.closest('.gallery-item');
+            if (item) {
+                const img = item.querySelector('img');
+                if (img) {
+                    lightboxImg.src = img.src;
+                    lightbox.classList.remove('hidden');
+                    setTimeout(() => lightbox.classList.remove('opacity-0'), 10);
+                    document.body.style.overflow = 'hidden';
+                }
+            }
+        });
+
+        const closeLightbox = () => {
+            lightbox.classList.add('opacity-0');
+            setTimeout(() => lightbox.classList.add('hidden'), 300);
+            document.body.style.overflow = '';
+        };
+
+        if (closeBtn) closeBtn.addEventListener('click', closeLightbox);
+        lightbox.addEventListener('click', (e) => {
+            if (e.target === lightbox) closeLightbox();
+        });
+
+        if (!window.galleryKeydownAttached) {
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape' && !lightbox.classList.contains('hidden')) {
+                    closeLightbox();
                 }
             });
-
-            if (noResults) {
-                if (visibleCount === 0) {
-                    noResults.classList.remove('hidden');
-                } else {
-                    noResults.classList.add('hidden');
-                }
-            }
-        });
-    });
-
-    // Lightbox Logic
-    const lightbox = document.getElementById('lightbox');
-    const lightboxImg = document.getElementById('lightbox-img');
-    const lightboxTitle = document.getElementById('lightbox-title');
-    const lightboxDesc = document.getElementById('lightbox-desc');
-    const lightboxCat = document.getElementById('lightbox-category');
-    const closeBtn = document.getElementById('lightbox-close');
-
-    if (!lightbox) return;
-
-    galleryItems.forEach(item => {
-        item.addEventListener('click', () => {
-            const img = item.querySelector('img');
-
-            if (!img) return;
-
-            lightboxImg.src = img.src;
-
-            lightbox.classList.remove('hidden');
-            setTimeout(() => {
-                lightbox.classList.remove('opacity-0');
-            }, 10);
-            document.body.style.overflow = 'hidden';
-        });
-    });
-
-    const closeLightbox = () => {
-        lightbox.classList.add('opacity-0');
-        setTimeout(() => {
-            lightbox.classList.add('hidden');
-        }, 300);
-        document.body.style.overflow = '';
-    };
-
-    if (closeBtn) closeBtn.addEventListener('click', closeLightbox);
-
-    lightbox.addEventListener('click', (e) => {
-        if (e.target === lightbox) closeLightbox();
-    });
-
-    // Keydown listener - only add once
-    if (!window.galleryKeydownAttached) {
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape' && !lightbox.classList.contains('hidden')) {
-                closeLightbox();
-            }
-        });
-        window.galleryKeydownAttached = true;
+            window.galleryKeydownAttached = true;
+        }
     }
 };

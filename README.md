@@ -59,7 +59,7 @@ F_lab/
 ├── css/                # Compiled production CSS (style.css)
 ├── includes/           # Public site shared components (Navbar, Footer)
 ├── pages/              # Public facing pages (Contact, About, Gallery, etc.)
-├── sql/                # Database schema and migration scripts
+├── database/           # Database schema and migration scripts
 ├── src/                # Tailwind source files
 │   └── input.css      # Core Tailwind CSS entry point
 ├── index.php           # Landing Page
@@ -78,8 +78,7 @@ F_lab/
 ### 2. Database Setup
 1.  Open phpMyAdmin.
 2.  Create a database named `f_lab_db`.
-3.  Import `sql/schema.sql` to initialize the tables.
-4.  Run any additional migration scripts from the `sql/` folder if upgrading.
+3.  Visit `http://localhost/F_lab/migrate.php` to automatically create tables and seed data.
 
 ### 3. Project Configuration
 1.  Clone or place the project in your server's root (e.g., `C:\xampp\htdocs\F_lab`).

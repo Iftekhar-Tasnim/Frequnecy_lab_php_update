@@ -176,7 +176,7 @@
                                 <p id="form-message-text" class="font-medium"></p>
                             </div>
 
-                            <form id="contact-form" action="javascript:void(0);" data-url="<?php echo $path; ?>send_email.php" method="POST" class="space-y-6">
+                            <form id="contact-form" action="javascript:void(0);" data-url="process_contact.php" method="POST" class="space-y-6">
                                 <!-- Honeypot field for spam protection (hidden from users) -->
                                 <div style="position: absolute; left: -5000px;" aria-hidden="true">
                                     <input type="text" name="website" tabindex="-1" autocomplete="off" />
@@ -328,93 +328,7 @@
     <?php include '../includes/footer.php'; ?>
 
 
-    <script>
-        // Contact Form Handler
-        document.addEventListener('DOMContentLoaded', function() {
-            const contactForm = document.getElementById('contact-form');
-            const submitBtn = document.getElementById('submit-btn');
-            const submitText = document.getElementById('submit-text');
-            const submitLoader = document.getElementById('submit-loader');
-            const formMessage = document.getElementById('form-message');
-            const formMessageText = document.getElementById('form-message-text');
 
-            if (contactForm) {
-                contactForm.addEventListener('submit', async function(e) {
-                    e.preventDefault();
-
-                    // Disable submit button and show loading state
-                    submitBtn.disabled = true;
-                    submitText.classList.add('hidden');
-                    submitLoader.classList.remove('hidden');
-
-                    // Hide any previous messages
-                    formMessage.classList.add('hidden');
-
-                    try {
-                        // Get form data
-                        const formData = new FormData(contactForm);
-
-                        // Get URL from data attribute
-                        const url = contactForm.getAttribute('data-url');
-
-                        // Send AJAX request
-                        const response = await fetch(url, {
-                            method: 'POST',
-                            body: formData
-                        });
-
-                        const result = await response.json();
-
-                        // Show message
-                        formMessageText.textContent = result.message;
-                        
-                        if (result.success) {
-                            // Success
-                            formMessage.className = 'mb-6 p-4 rounded-lg bg-green-100 border border-green-400 text-green-800';
-                            formMessage.classList.remove('hidden');
-                            
-                            // Reset form
-                            contactForm.reset();
-                            
-                            // Scroll to message
-                            formMessage.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-                        } else {
-                            // Error
-                            formMessage.className = 'mb-6 p-4 rounded-lg bg-red-100 border border-red-400 text-red-800';
-                            formMessage.classList.remove('hidden');
-                            
-                            // If there are specific error messages, display them
-                            if (result.data && result.data.errors) {
-                                const errorList = document.createElement('ul');
-                                errorList.className = 'mt-2 ml-4 list-disc';
-                                result.data.errors.forEach(error => {
-                                    const li = document.createElement('li');
-                                    li.textContent = error;
-                                    errorList.appendChild(li);
-                                });
-                                formMessageText.appendChild(errorList);
-                            }
-                            
-                            // Scroll to message
-                            formMessage.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-                        }
-                    } catch (error) {
-                        // Network or parsing error
-                        formMessageText.textContent = 'An unexpected error occurred. Please try again later or contact us directly at info@flabbd.com';
-                        formMessage.className = 'mb-6 p-4 rounded-lg bg-red-100 border border-red-400 text-red-800';
-                        formMessage.classList.remove('hidden');
-                        
-                        console.error('Form submission error:', error);
-                    } finally {
-                        // Re-enable submit button and hide loading state
-                        submitBtn.disabled = false;
-                        submitText.classList.remove('hidden');
-                        submitLoader.classList.add('hidden');
-                    }
-                });
-            }
-        });
-    </script>
 
 </body>
 </html>
