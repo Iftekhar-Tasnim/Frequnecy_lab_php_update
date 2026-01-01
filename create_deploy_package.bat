@@ -8,8 +8,10 @@ mkdir "deploy_temp"
 :: Copy files
 echo Copying files...
 xcopy "admin" "deploy_temp\admin" /s /e /i /y
-xcopy "assets" "deploy_temp\assets" /s /e /i /y
 
+xcopy "api" "deploy_temp\api" /s /e /i /y
+
+xcopy "assets" "deploy_temp\assets" /s /e /i /y
 xcopy "css" "deploy_temp\css" /s /e /i /y
 xcopy "includes" "deploy_temp\includes" /s /e /i /y
 xcopy "js" "deploy_temp\js" /s /e /i /y
@@ -18,8 +20,7 @@ xcopy "database" "deploy_temp\database" /s /e /i /y
 
 copy "index.php" "deploy_temp\"
 copy "migrate.php" "deploy_temp\"
-copy "send_email.php" "deploy_temp\"
-copy "test_db_connection.php" "deploy_temp\"
+copy "process_contact.php" "deploy_temp\"
 copy "README.md" "deploy_temp\"
 
 :: Create Zip (Using PowerShell)

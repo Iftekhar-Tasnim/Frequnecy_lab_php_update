@@ -111,6 +111,7 @@ if (!empty($errors)) {
 }
 
 // Save to database
+// Save to database
 try {
     $stmt = $pdo->prepare("
         INSERT INTO contact_messages (name, email, phone, subject, message, ip_address, user_agent) 
@@ -135,8 +136,9 @@ try {
         sendResponse(false, 'Failed to save message. Please try again later.');
     }
     
-} catch (PDOException $e) {
-    // Log database error
-    error_log("Database error in contact form: " . $e->getMessage());
-    sendResponse(false, 'There was a system error. Please try again later.');
+} catch (Throwable $e) {
+    // Log error
+    error_log("Error in contact form: " . $e->getMessage());
+    // Return specific error for debugging (remove in production later)
+    sendResponse(false, 'System Error: ' . $e->getMessage());
 }

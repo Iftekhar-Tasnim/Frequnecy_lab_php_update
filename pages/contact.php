@@ -176,7 +176,7 @@
                                 <p id="form-message-text" class="font-medium"></p>
                             </div>
 
-                            <form id="contact-form" action="javascript:void(0);" data-url="process_contact.php" method="POST" class="space-y-6">
+                            <form id="contact-form" action="javascript:void(0);" data-url="/process_contact.php" method="POST" class="space-y-6">
                                 <!-- Honeypot field for spam protection (hidden from users) -->
                                 <div style="position: absolute; left: -5000px;" aria-hidden="true">
                                     <input type="text" name="website" tabindex="-1" autocomplete="off" />
