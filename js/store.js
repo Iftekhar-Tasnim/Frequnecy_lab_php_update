@@ -342,6 +342,13 @@ let expandedCategory = null; // Track which category is expanded (for accordion 
 
 // Initialize store
 function initStore() {
+    // Refresh cart from storage in case it was modified elsewhere (e.g. checkout)
+    try {
+        cart = JSON.parse(localStorage.getItem('frequencyLabCart')) || [];
+    } catch (e) {
+        cart = [];
+    }
+
     renderProducts();
     renderCategories();
     updateCartUI();
