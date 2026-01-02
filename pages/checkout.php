@@ -281,7 +281,7 @@
 
 <script>
 // Load cart from localStorage
-let cart = [];
+var cart = [];
 try {
     cart = JSON.parse(localStorage.getItem('frequencyLabCart')) || [];
 } catch (e) {

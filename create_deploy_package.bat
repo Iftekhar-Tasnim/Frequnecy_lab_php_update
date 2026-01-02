@@ -32,4 +32,4 @@ rmdir /s /q "deploy_temp"
 
 echo Done! Deployment package created: Frequency_Lab_Deploy.zip
 echo Unzip this file on your hosting server (public_html).
-pause
+timeout /t 5

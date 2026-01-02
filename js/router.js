@@ -398,7 +398,11 @@ class Router {
             document.title = newTitle;
 
             // Replace body content
+            // Replace body content
             document.body.innerHTML = bodyContent;
+
+            // Execute scripts found in the new content
+            this.executeScripts(doc);
 
             // Update URL without reload (using history API for cleaner URLs)
             if (route !== '/') {
@@ -417,6 +421,47 @@ class Router {
             console.error('Error loading page:', error);
             this.showError('Failed to load page. Please try again.');
         }
+    }
+
+    executeScripts(doc) {
+        // Find all script tags in the mocked document
+        const scripts = doc.querySelectorAll('script');
+
+        scripts.forEach(oldScript => {
+            const src = oldScript.getAttribute('src');
+            const content = oldScript.innerHTML;
+
+            // Skip globally loaded scripts to prevent redeclaration errors
+            if (src) {
+                if (src.includes('router.js') ||
+                    src.includes('main.js') ||
+                    src.includes('tailwind.config.js') ||
+                    (src.includes('store.js') && typeof window.initStore !== 'undefined') ||
+                    (src.includes('contact.js') && typeof window.initializeContactForm !== 'undefined')) {
+                    // console.log('Skipping script:', src);
+                    return;
+                }
+            }
+
+            // Create a new script element to trigger execution
+            const newScript = document.createElement('script');
+
+            // Copy attributes
+            Array.from(oldScript.attributes).forEach(attr => {
+                newScript.setAttribute(attr.name, attr.value);
+            });
+
+            // Copy content
+            if (content) {
+                newScript.innerHTML = content;
+            }
+
+            // Append to body to execute
+            document.body.appendChild(newScript);
+
+            // Remove after execution to keep DOM clean (optional)
+            // newScript.remove();
+        });
     }
 
     showLoading() {
