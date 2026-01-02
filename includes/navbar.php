@@ -54,7 +54,7 @@
     </div>
     
     <!-- Mobile Menu -->
-    <div id="mobile-menu" class="hidden lg:hidden absolute top-20 left-0 w-full h-[calc(100vh-5rem)] bg-prussian-blue-950/98 backdrop-blur-3xl border-t border-white/5 z-10 overflow-y-auto">
+    <div id="mobile-menu" class="hidden lg:hidden absolute top-20 left-0 w-full h-[calc(100vh-5rem)] bg-prussian-blue-950 border-t border-white/5 z-10 overflow-y-auto">
         <div class="flex flex-col h-full">
             
             <!-- Navigation Links -->
@@ -76,6 +76,9 @@
                 </a>
                 <a href="<?php echo $base; ?>pages/gallery.php" class="mobile-nav-link block py-4 px-2 border-b border-white/5 text-white/80 font-inter font-medium text-lg hover:text-white hover:pl-4 transition-all duration-300 <?php echo ($current_page == 'gallery.php') ? 'text-white border-blue-500/50 pl-4' : ''; ?>">
                     Gallery
+                </a>
+                <a href="<?php echo $base; ?>pages/shop.php" class="mobile-nav-link block py-4 px-2 border-b border-white/5 text-white/80 font-inter font-medium text-lg hover:text-white hover:pl-4 transition-all duration-300 <?php echo ($current_page == 'shop.php') ? 'text-white border-blue-500/50 pl-4' : ''; ?>">
+                    Shop
                 </a>
                 
                 <a href="<?php echo $base; ?>pages/contact.php" class="mobile-nav-link block mt-8 py-3 px-6 text-center text-white bg-blue-600 rounded-lg font-medium hover:bg-blue-500 transition-colors shadow-lg shadow-blue-900/20 <?php echo ($current_page == 'contact.php') ? 'ring-2 ring-white/20' : ''; ?>">
