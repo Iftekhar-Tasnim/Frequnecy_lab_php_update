@@ -853,69 +853,226 @@ function showProductDetail(productId) {
         return;
     }
 
-    const productsGrid = document.getElementById('products-grid');
-    if (!productsGrid) return;
+    const mainContent = document.querySelector('main');
+    if (!mainContent) return;
 
-    // Replace the entire products grid with product detail view
-    productsGrid.parentElement.innerHTML = `
-        <div class="max-w-5xl mx-auto">
-            <a href="#/shop" class="inline-flex items-center gap-2 text-yale-blue-600 hover:text-yale-blue-700 font-semibold mb-6">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
-                </svg>
-                Back to Shop
-            </a>
+    // Get related products (same category, excluding current product)
+    const relatedProducts = products
+        .filter(p => p.category === product.category && p.id !== product.id)
+        .slice(0, 4);
+
+    // Hide hero section and replace entire main content
+    mainContent.innerHTML = `
+        <!-- Product Hero Section -->
+        <section class="relative bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 py-4 md:py-6 -mt-8">
+            <div class="absolute inset-0 bg-gradient-to-r from-blue-600/10 to-cyan-600/10"></div>
+            <div class="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PHBhdHRlcm4gaWQ9ImdyaWQiIHdpZHRoPSI2MCIgaGVpZ2h0PSI2MCIgcGF0dGVyblVuaXRzPSJ1c2VyU3BhY2VPblVzZSI+PHBhdGggZD0iTSAxMCAwIEwgMCAwIDAgMTAiIGZpbGw9Im5vbmUiIHN0cm9rZT0id2hpdGUiIHN0cm9rZS1vcGFjaXR5PSIwLjAzIiBzdHJva2Utd2lkdGg9IjEiLz48L3BhdHRlcm4+PC9kZWZzPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9InVybCgjZ3JpZCkiLz48L3N2Zz4=')] opacity-40"></div>
             
-            <div class="bg-white rounded-xl shadow-lg overflow-hidden">
-                <div class="grid md:grid-cols-2 gap-8 p-6 md:p-8">
-                    <div class="bg-platinum-50 rounded-xl p-8 flex items-center justify-center">
-                        <img src="${product.image}" 
-                             alt="${product.name}" 
-                             class="max-w-full max-h-96 object-contain"
-                             onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22400%22 height=%22400%22%3E%3Crect fill=%22%23f0f0f0%22 width=%22400%22 height=%22400%22/%3E%3Ctext fill=%22%23999%22 x=%2250%25%22 y=%2250%25%22 text-anchor=%22middle%22 dy=%22.3em%22 font-family=%22Arial%22 font-size=%2220%22%3EProduct Image%3C/text%3E%3C/svg%3E'">
+            <div class="container mx-auto px-4 relative z-10 max-w-6xl">
+                <!-- Breadcrumb Navigation -->
+                <nav class="flex items-center gap-2 text-xs mb-2 md:mb-3 overflow-x-auto">
+                    <a href="#/shop" class="text-slate-400 hover:text-white transition-colors whitespace-nowrap">Shop</a>
+                    <svg class="w-3 h-3 text-slate-600 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                    </svg>
+                    <a href="#/shop" class="text-slate-400 hover:text-white transition-colors whitespace-nowrap truncate max-w-[100px] md:max-w-none">${product.category}</a>
+                    <svg class="w-3 h-3 text-slate-600 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                    </svg>
+                    <span class="text-white font-semibold truncate">${product.name}</span>
+                </nav>
+
+                <!-- Product Badge -->
+                <div class="inline-flex items-center gap-1.5 bg-gradient-to-r from-blue-500/20 to-cyan-500/20 backdrop-blur-sm border border-blue-400/30 rounded-full px-2.5 py-1 mb-2 md:mb-3">
+                    <span class="w-1.5 h-1.5 bg-cyan-400 rounded-full animate-pulse"></span>
+                    <span class="text-cyan-300 text-xs font-semibold">${product.subcategory}</span>
+                </div>
+
+                <!-- Product Title -->
+                <h1 class="text-xl md:text-2xl font-bold mb-2">
+                    <span class="bg-gradient-to-r from-white via-blue-100 to-cyan-200 bg-clip-text text-transparent">
+                        ${product.name}
+                    </span>
+                </h1>
+
+                <!-- Quick Info -->
+                <div class="flex flex-wrap items-center gap-2 md:gap-3 text-slate-300">
+                    <div class="flex items-center gap-1.5">
+                        <svg class="w-4 h-4 text-green-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                        </svg>
+                        <span class="text-xs font-semibold ${product.inStock ? 'text-green-400' : 'text-red-400'}">
+                            ${product.inStock ? 'In Stock' : 'Out of Stock'}
+                        </span>
                     </div>
-                    <div>
-                        <p class="text-sm text-yale-blue-600 font-semibold mb-2">${product.category} / ${product.subcategory}</p>
-                        <h1 class="text-3xl md:text-4xl font-bold text-prussian-blue-900 mb-4 font-exo">${product.name}</h1>
-                        <p class="text-platinum-700 mb-6 leading-relaxed">${product.description}</p>
-                        
-                        <div class="mb-6">
-                            <h3 class="font-semibold text-prussian-blue-800 mb-3">Specifications:</h3>
-                            <ul class="space-y-2">
+                    <div class="flex items-center gap-1.5">
+                        <svg class="w-4 h-4 text-blue-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                        </svg>
+                        <span class="text-base md:text-lg font-bold text-white">৳${product.price.toLocaleString()}</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Main Product Content -->
+        <section class="py-4 md:py-6 bg-slate-50">
+            <div class="container mx-auto px-4 max-w-6xl">
+                <div class="grid lg:grid-cols-5 gap-3 md:gap-4 mb-5 md:mb-6">
+                    <!-- Product Image (Left Column - Spans 2 on desktop) -->
+                    <div class="lg:col-span-2">
+                        <div class="bg-white rounded-lg shadow-md p-3 md:p-4 lg:sticky lg:top-20">
+                            <div class="bg-gradient-to-br from-slate-100 to-slate-200 rounded-lg p-3 md:p-4 mb-2 md:mb-3">
+                                <img src="${product.image}" 
+                                     alt="${product.name}" 
+                                     class="w-full h-auto max-h-48 md:max-h-64 object-contain mx-auto"
+                                     onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22400%22 height=%22400%22%3E%3Crect fill=%22%23f0f0f0%22 width=%22400%22 height=%22400%22/%3E%3Ctext fill=%22%23999%22 x=%2250%25%22 y=%2250%25%22 text-anchor=%22middle%22 dy=%22.3em%22 font-family=%22Arial%22 font-size=%2220%22%3EProduct Image%3C/text%3E%3C/svg%3E'">
+                            </div>
+                            
+                            <!-- Trust Badges -->
+                            <div class="grid grid-cols-3 gap-1.5">
+                                <div class="text-center p-1.5 bg-blue-50 rounded">
+                                    <svg class="w-4 h-4 text-blue-600 mx-auto mb-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                                    </svg>
+                                    <p class="text-[9px] font-semibold text-slate-700">Authentic</p>
+                                </div>
+                                <div class="text-center p-1.5 bg-green-50 rounded">
+                                    <svg class="w-4 h-4 text-green-600 mx-auto mb-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+                                    </svg>
+                                    <p class="text-[9px] font-semibold text-slate-700">Warranty</p>
+                                </div>
+                                <div class="text-center p-1.5 bg-cyan-50 rounded">
+                                    <svg class="w-4 h-4 text-cyan-600 mx-auto mb-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"/>
+                                    </svg>
+                                    <p class="text-[9px] font-semibold text-slate-700">Secure Pay</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Product Details (Right Column - Spans 3 on desktop) -->
+                    <div class="lg:col-span-3 space-y-2.5 md:space-y-3">
+                        <!-- Description Card -->
+                        <div class="bg-white rounded-lg shadow-md p-2.5 md:p-3">
+                            <h2 class="text-sm md:text-base font-bold text-slate-900 mb-1.5 md:mb-2 flex items-center gap-1.5">
+                                <svg class="w-4 h-4 text-blue-600 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                </svg>
+                                <span>Product Description</span>
+                            </h2>
+                            <p class="text-xs text-slate-700 leading-relaxed">${product.description}</p>
+                        </div>
+
+                        <!-- Specifications Card -->
+                        <div class="bg-white rounded-lg shadow-md p-2.5 md:p-3">
+                            <h2 class="text-sm md:text-base font-bold text-slate-900 mb-1.5 md:mb-2 flex items-center gap-1.5">
+                                <svg class="w-4 h-4 text-blue-600 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"/>
+                                </svg>
+                                <span>Technical Specifications</span>
+                            </h2>
+                            <ul class="space-y-1">
                                 ${product.specs.map(spec => `
-                                    <li class="flex items-start gap-2 text-sm text-platinum-700">
-                                        <svg class="w-5 h-5 text-yale-blue-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <li class="flex items-start gap-1.5 p-1.5 bg-slate-50 rounded hover:bg-blue-50 transition-colors">
+                                        <svg class="w-3 h-3 text-blue-600 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
                                         </svg>
-                                        ${spec}
+                                        <span class="text-xs text-slate-700">${spec}</span>
                                     </li>
                                 `).join('')}
                             </ul>
                         </div>
 
-                        <div class="flex items-center justify-between mb-6 p-4 bg-yale-blue-50 rounded-lg">
-                            <span class="text-3xl font-bold text-yale-blue-600">৳${product.price.toLocaleString()}</span>
-                            <span class="text-sm font-semibold ${product.inStock ? 'text-green-600' : 'text-red-600'}">
-                                ${product.inStock ? '✓ In Stock' : '✗ Out of Stock'}
-                            </span>
-                        </div>
+                        <!-- Add to Cart Card -->
+                        <div class="bg-gradient-to-br from-blue-600 to-cyan-600 rounded-lg shadow-lg p-2.5 md:p-3 text-white">
+                            <div class="flex items-center justify-between mb-2 gap-2">
+                                <div>
+                                    <p class="text-blue-100 text-[9px] mb-0.5">Price</p>
+                                    <p class="text-lg md:text-2xl font-bold">৳${product.price.toLocaleString()}</p>
+                                </div>
+                                <div class="text-right">
+                                    <p class="text-blue-100 text-[9px] mb-0.5">Availability</p>
+                                    <p class="text-xs md:text-sm font-bold ${product.inStock ? 'text-green-300' : 'text-red-300'}">
+                                        ${product.inStock ? '✓ In Stock' : '✗ Out of Stock'}
+                                    </p>
+                                </div>
+                            </div>
+                            
+                            <button onclick="addToCart(${product.id}); showCartNotification('${product.name}');" 
+                                    ${!product.inStock ? 'disabled' : ''}
+                                    class="w-full bg-white text-blue-600 hover:bg-blue-50 disabled:bg-slate-300 disabled:text-slate-500 disabled:cursor-not-allowed px-3 py-2 md:py-2.5 rounded-lg font-bold text-sm transition-all duration-300 hover:scale-105 hover:shadow-2xl flex items-center justify-center gap-1.5">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"/>
+                                </svg>
+                                ${product.inStock ? 'Add to Cart' : 'Out of Stock'}
+                            </button>
 
-                        <button onclick="addToCart(${product.id}); showCartNotification('${product.name}');" 
-                                ${!product.inStock ? 'disabled' : ''}
-                                class="w-full bg-yale-blue-500 hover:bg-yale-blue-600 disabled:bg-platinum-300 disabled:cursor-not-allowed text-white px-6 py-4 rounded-lg font-bold text-lg transition-all duration-300 hover:scale-105 flex items-center justify-center gap-3">
-                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"/>
-                            </svg>
-                            Add to Cart
-                        </button>
+                            <a href="#/shop" class="block text-center mt-1.5 md:mt-2 text-white/80 hover:text-white text-xs font-semibold transition-colors">
+                                ← Continue Shopping
+                            </a>
+                        </div>
                     </div>
                 </div>
+
+                <!-- Related Products Section -->
+                ${relatedProducts.length > 0 ? `
+                    <div class="mt-5 md:mt-8 max-w-6xl mx-auto">
+                        <div class="flex items-center justify-between mb-2.5 md:mb-4">
+                            <h2 class="text-base md:text-xl font-bold text-slate-900">Related Products</h2>
+                            <a href="#/shop" class="text-blue-600 hover:text-blue-700 font-semibold flex items-center gap-1 group text-xs">
+                                <span class="hidden sm:inline">View All</span>
+                                <svg class="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                                </svg>
+                            </a>
+                        </div>
+
+                        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2.5 md:gap-3">
+                            ${relatedProducts.map(relatedProduct => `
+                                <div class="bg-white rounded-lg shadow-md hover:shadow-lg transition-all duration-300 overflow-hidden group">
+                                    <div class="relative overflow-hidden bg-slate-100 aspect-square">
+                                        <img src="${relatedProduct.image}" 
+                                             alt="${relatedProduct.name}" 
+                                             class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
+                                             onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22400%22 height=%22400%22%3E%3Crect fill=%22%23f0f0f0%22 width=%22400%22 height=%22400%22/%3E%3Ctext fill=%22%23999%22 x=%2250%25%22 y=%2250%25%22 text-anchor=%22middle%22 dy=%22.3em%22 font-family=%22Arial%22 font-size=%2220%22%3EProduct%3C/text%3E%3C/svg%3E'">
+                                        <a href="#/product/${relatedProduct.id}" class="absolute inset-0 bg-black/0 hover:bg-black/20 transition-colors duration-300 flex items-center justify-center opacity-0 group-hover:opacity-100">
+                                            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
+                                            </svg>
+                                        </a>
+                                    </div>
+                                    <div class="p-2">
+                                        <p class="text-[9px] text-blue-600 font-semibold mb-0.5 truncate">${relatedProduct.subcategory}</p>
+                                        <h3 class="text-xs font-bold text-slate-900 mb-1 line-clamp-2 min-h-[2rem]">${relatedProduct.name}</h3>
+                                        <div class="flex items-center justify-between gap-1.5">
+                                            <span class="text-xs md:text-sm font-bold text-blue-600">৳${relatedProduct.price.toLocaleString()}</span>
+                                            <button onclick="addToCart(${relatedProduct.id})" 
+                                                    ${!relatedProduct.inStock ? 'disabled' : ''}
+                                                    class="bg-blue-600 hover:bg-blue-700 disabled:bg-slate-300 disabled:cursor-not-allowed text-white p-1.5 rounded transition-all duration-300 hover:scale-110">
+                                                <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"/>
+                                                </svg>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                ` : ''}
             </div>
-        </div>
+        </section>
     `;
 
     // Update cart UI
     updateCartUI();
+
+    // Scroll to top
+    window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
 // Export initStore for router
