@@ -96,3 +96,4 @@
 <!-- Main JS -->
 <script src="<?php echo $base; ?>js/main.js"></script>
 <script src="<?php echo $base; ?>js/contact.js"></script>
+<script src="<?php echo $base; ?>js/store.js"></script>

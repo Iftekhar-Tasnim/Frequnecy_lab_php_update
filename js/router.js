@@ -14,6 +14,7 @@ class Router {
 
             '/blog': 'pages/blog.php',
             '/shop': 'pages/shop.php',
+            '/checkout': 'pages/checkout.php',
             '/contact': 'pages/contact.php',
             '/privacy-policy': 'pages/privacy-policy.php',
             '/safeguard': 'pages/safeguard.php'
@@ -160,6 +161,14 @@ class Router {
         // Normalize route
         if (!route.startsWith('/')) {
             route = '/' + route;
+        }
+
+        // Check for product detail route
+        if (route.startsWith('/product/')) {
+            // Product detail pages use shop.php as base
+            if (!this.routes[route]) {
+                this.routes[route] = 'pages/shop.php';
+            }
         }
 
         // If route doesn't exist, default to home
@@ -480,7 +489,33 @@ class Router {
             }
         }
 
+        // Initialize store if on shop page
+        if (this.currentRoute === '/shop') {
+            setTimeout(() => {
+                if (typeof window.initStore === 'function') {
+                    window.initStore();
+                }
+            }, 100);
+        }
 
+        // Initialize checkout if on checkout page
+        if (this.currentRoute === '/checkout') {
+            setTimeout(() => {
+                if (typeof window.initCheckout === 'function') {
+                    window.initCheckout();
+                }
+            }, 100);
+        }
+
+        // Handle product detail pages
+        if (this.currentRoute.startsWith('/product/')) {
+            const productId = parseInt(this.currentRoute.split('/')[2]);
+            setTimeout(() => {
+                if (typeof window.showProductDetail === 'function') {
+                    window.showProductDetail(productId);
+                }
+            }, 100);
+        }
 
         // Links are already intercepted via event delegation, no need to re-intercept
     }
