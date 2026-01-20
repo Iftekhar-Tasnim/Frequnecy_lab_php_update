@@ -28,11 +28,11 @@
         <div class="absolute inset-0 z-0 scrollbar-hide">
             <div class="carousel w-full h-full flex scroll-smooth snap-x snap-mandatory overflow-x-auto scrollbar-hide">
                 <div id="slide1" class="carousel-item relative w-full h-full flex-shrink-0 snap-center">
-                    <img src="assets/hero/image1.png" class="w-full h-full object-cover">
+                    <img src="assets/hero/image1.png" class="w-full h-full object-cover" loading="eager">
                     <div class="absolute inset-0 bg-black/50"></div>
                 </div>
                 <div id="slide2" class="carousel-item relative w-full h-full flex-shrink-0 snap-center">
-                    <img src="assets/hero/image2.jpg" class="w-full h-full object-cover">
+                    <img src="assets/hero/image2.jpg" class="w-full h-full object-cover" loading="lazy">
                     <div class="absolute inset-0 bg-black/50"></div>
                 </div>
             </div>
@@ -99,7 +99,7 @@
                 <!-- Image Side -->
                 <div class="relative">
                     <div class="aspect-square rounded-3xl overflow-hidden shadow-2xl skew-y-3">
-                        <img src="assets/hero/image2.jpg" alt="Active learning session" class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700">
+                        <img src="assets/hero/image2.jpg" alt="Active learning session" class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700" loading="lazy">
                     </div>
                     <!-- New Badge -->
                     <div class="absolute -bottom-8 -left-8 bg-black/80 backdrop-blur-xl text-white p-6 rounded-3xl border border-white/10 shadow-2xl hidden md:block group animate-pulse hover:animate-none transition-all">
@@ -128,24 +128,24 @@
             <div class="relative flex overflow-x-hidden group py-4">
                 <div class="flex animate-marquee whitespace-nowrap gap-16 items-center">
                     <!-- First Set -->
-                    <img src="assets/partners/aiub.png" alt="AIUB" class="h-15 w-auto object-contain transition-all duration-300">
-                    <img src="assets/partners/phulki.jpg" alt="Phulki" class="h-15 w-auto object-contain transition-all duration-300">
-                    <img src="assets/partners/cropped-pbgs-small.png" alt="PBGS" class="h-15 w-auto object-contain transition-all duration-300">
-                    <img src="assets/partners/Rajshahi_University_School.png" alt="RU School" class="h-15 w-auto object-contain transition-all duration-300">
-                    <img src="assets/partners/Bangladesh_Agriculture_University_logo.svg.png" alt="BAU" class="h-15 w-auto object-contain transition-all duration-300">
-                    <img src="assets/partners/BRRI.jpg" alt="BRRI" class="h-15 w-auto object-contain transition-all duration-300">
-                    <img src="assets/partners/BSRI.jpg" alt="BSRI" class="h-15 w-auto object-contain transition-all duration-300">
-                    <img src="assets/partners/Godagari School and College.jfif" alt="Godagari" class="h-15 w-auto object-contain transition-all duration-300">
+                    <img src="assets/partners/aiub.png" alt="AIUB" class="h-15 w-auto object-contain transition-all duration-300" loading="lazy">
+                    <img src="assets/partners/phulki.jpg" alt="Phulki" class="h-15 w-auto object-contain transition-all duration-300" loading="lazy">
+                    <img src="assets/partners/cropped-pbgs-small.png" alt="PBGS" class="h-15 w-auto object-contain transition-all duration-300" loading="lazy">
+                    <img src="assets/partners/Rajshahi_University_School.png" alt="RU School" class="h-15 w-auto object-contain transition-all duration-300" loading="lazy">
+                    <img src="assets/partners/Bangladesh_Agriculture_University_logo.svg.png" alt="BAU" class="h-15 w-auto object-contain transition-all duration-300" loading="lazy">
+                    <img src="assets/partners/BRRI.jpg" alt="BRRI" class="h-15 w-auto object-contain transition-all duration-300" loading="lazy">
+                    <img src="assets/partners/BSRI.jpg" alt="BSRI" class="h-15 w-auto object-contain transition-all duration-300" loading="lazy">
+                    <img src="assets/partners/Godagari School and College.jfif" alt="Godagari" class="h-15 w-auto object-contain transition-all duration-300" loading="lazy">
                     
                     <!-- Second Set (Duplicate for Loop) -->
-                    <img src="assets/partners/aiub.png" alt="AIUB" class="h-15 w-auto object-contain transition-all duration-300">
-                    <img src="assets/partners/phulki.jpg" alt="Phulki" class="h-15 w-auto object-contain transition-all duration-300">
-                    <img src="assets/partners/cropped-pbgs-small.png" alt="PBGS" class="h-15 w-auto object-contain transition-all duration-300">
-                    <img src="assets/partners/Rajshahi_University_School.png" alt="RU School" class="h-15 w-auto object-contain transition-all duration-300">
-                    <img src="assets/partners/Bangladesh_Agriculture_University_logo.svg.png" alt="BAU" class="h-15 w-auto object-contain transition-all duration-300">
-                    <img src="assets/partners/BRRI.jpg" alt="BRRI" class="h-15 w-auto object-contain transition-all duration-300">
-                    <img src="assets/partners/BSRI.jpg" alt="BSRI" class="h-15 w-auto object-contain transition-all duration-300">
-                    <img src="assets/partners/Godagari School and College.jfif" alt="Godagari" class="h-15 w-auto object-contain transition-all duration-300">
+                    <img src="assets/partners/aiub.png" alt="AIUB" class="h-15 w-auto object-contain transition-all duration-300" loading="lazy">
+                    <img src="assets/partners/phulki.jpg" alt="Phulki" class="h-15 w-auto object-contain transition-all duration-300" loading="lazy">
+                    <img src="assets/partners/cropped-pbgs-small.png" alt="PBGS" class="h-15 w-auto object-contain transition-all duration-300" loading="lazy">
+                    <img src="assets/partners/Rajshahi_University_School.png" alt="RU School" class="h-15 w-auto object-contain transition-all duration-300" loading="lazy">
+                    <img src="assets/partners/Bangladesh_Agriculture_University_logo.svg.png" alt="BAU" class="h-15 w-auto object-contain transition-all duration-300" loading="lazy">
+                    <img src="assets/partners/BRRI.jpg" alt="BRRI" class="h-15 w-auto object-contain transition-all duration-300" loading="lazy">
+                    <img src="assets/partners/BSRI.jpg" alt="BSRI" class="h-15 w-auto object-contain transition-all duration-300" loading="lazy">
+                    <img src="assets/partners/Godagari School and College.jfif" alt="Godagari" class="h-15 w-auto object-contain transition-all duration-300" loading="lazy">
                 </div>
 
                 <!-- Gradient Overlays for Fade Effect -->

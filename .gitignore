@@ -1,4 +1,29 @@
+# Dependencies
 node_modules/
+
+# Build output
 css/style.css
-.DS_Store
+
+# Environment and config
 .env
+config/db.php
+
+# Cache
+cache/*
+!cache/.htaccess
+!cache/index.php
+
+# Deployment
+deploy_temp/
+*.zip
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+
+# Logs
+*.log

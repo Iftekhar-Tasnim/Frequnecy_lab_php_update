@@ -1,6 +1,11 @@
 <?php
 require_once '../includes/auth.php';
+require_once '../includes/CacheManager.php';
+
 $auth->requireLogin();
+
+// Initialize cache
+$cache = new CacheManager();
 
 // Handle Delete
 if (isset($_POST['delete_id'])) {
@@ -21,7 +26,11 @@ if (isset($_POST['delete_id'])) {
         
         $deleteStmt = $pdo->prepare("DELETE FROM gallery_images WHERE id = ?");
         $deleteStmt->execute([$id]);
-        $success_msg = "Image deleted successfully.";
+        
+        // Clear gallery cache
+        $cache->clear('gallery_*');
+        
+        $success_msg = "Image deleted successfully. Cache cleared.";
     } else {
         $error_msg = "You do not have permission to delete.";
     }

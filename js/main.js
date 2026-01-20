@@ -499,7 +499,8 @@ window.initializeDynamicGallery = function () {
         // Don't show loader validation here, rely on Sentinel/Observer visibility or just keep it simple
 
         const targetPage = reset ? 1 : currentPage + 1;
-        const url = `./api/get_gallery_images.php?page=${targetPage}&limit=12&category=${encodeURIComponent(currentCategory)}`;
+        // Use 'api/' since we're in hash-based routing from index.php (not pages/gallery.php)
+        const url = `api/get_gallery_images.php?page=${targetPage}&limit=12&category=${encodeURIComponent(currentCategory)}`;
 
         try {
             const res = await fetch(url);

@@ -1,6 +1,11 @@
 <?php
 require_once '../includes/auth.php';
+require_once '../includes/CacheManager.php';
+
 $auth->requireLogin();
+
+// Initialize cache
+$cache = new CacheManager();
 
 // Initialize variables
 $is_edit = false;
@@ -81,10 +86,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 if ($is_edit) {
                     $stmt = $pdo->prepare("UPDATE gallery_images SET title=?, programme_id=?, description=?, image_path=? WHERE id=?");
                     $stmt->execute([$title, $programme_id, $description, $image_path, $id]);
-                    $success_msg = "Image updated successfully!";
+                    
+                    // Clear gallery cache
+                    $cache->clear('gallery_*');
+                    
+                    $success_msg = "Image updated successfully! Cache cleared.";
                 } else {
                     $stmt = $pdo->prepare("INSERT INTO gallery_images (title, programme_id, description, image_path) VALUES (?, ?, ?, ?)");
                     $stmt->execute([$title, $programme_id, $description, $image_path]);
+                    
+                    // Clear gallery cache
+                    $cache->clear('gallery_*');
+                    
                     // Redirect to list after add
                     header('Location: gallery.php');
                     exit;

@@ -1,0 +1,47 @@
+{
+    "packageName": "Frequency_Lab_Deploy",
+    "buildCss": true,
+    "include": [
+        "admin/**",
+        "api/**",
+        "assets/**",
+        "css/**",
+        "database/migrations/**",
+        "includes/**",
+        "js/**",
+        "pages/**",
+        "index.php",
+        "migrate.php",
+        "process_contact.php",
+        "README.md",
+        ".htaccess"
+    ],
+    "exclude": [
+        "node_modules/**",
+        "src/**",
+        ".git/**",
+        ".gitignore",
+        "package.json",
+        "package-lock.json",
+        "tailwind.config.js",
+        "postcss.config.js",
+        "create_deploy_package.bat",
+        "create_deploy_package.ps1",
+        "deploy.config.json",
+        "deploy.bat",
+        "deploy.ps1",
+        "deploy_temp/**",
+        "*.zip",
+        "*.log",
+        ".DS_Store",
+        ".env",
+        "config/db.php",
+        "store_info.md",
+        "tests/**",
+        "playwright.config.js"
+    ],
+    "createConfigTemplate": true,
+    "configTemplates": {
+        "config/db.php": "config/db.example.php"
+    }
+}
