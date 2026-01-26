@@ -36,6 +36,13 @@ class MigrationManager {
         return $migrations;
     }
 
+    public function getPendingMigrations() {
+        $this->ensureMigrationTableExists();
+        $executed = $this->getExecutedMigrations();
+        $files = $this->getMigrationFiles();
+        return array_diff($files, $executed);
+    }
+
     public function migrate() {
         $this->ensureMigrationTableExists();
         

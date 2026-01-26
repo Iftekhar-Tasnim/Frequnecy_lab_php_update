@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Gallery API Test</title>
+</head>
+<body>
+    <h1>Gallery API Test</h1>
+    <div id="result"></div>
+    <script>
+        // Test the API directly
+        fetch('../api/get_gallery_images.php?page=1&limit=12&category=all')
+            .then(res => res.json())
+            .then(data => {
+                document.getElementById('result').innerHTML = '<pre>' + JSON.stringify(data, null, 2) + '</pre>';
+            })
+            .catch(err => {
+                document.getElementById('result').innerHTML = '<p style="color: red;">Error: ' + err.message + '</p>';
+            });
+    </script>
+</body>
+</html>

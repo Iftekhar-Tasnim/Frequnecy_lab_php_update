@@ -482,15 +482,6 @@ window.initializeDynamicGallery = function () {
     let isLoading = false;
     let hasMore = true;
 
-    // Check initial state (if less than 12 items, no more pages)
-    const initialItems = galleryGrid.querySelectorAll('.gallery-item').length;
-    if (initialItems < 12) {
-        hasMore = false;
-        if (loader) loader.classList.add('hidden');
-    } else {
-        if (loader) loader.classList.remove('hidden');
-    }
-
     // Function to load images
     const loadImages = async (reset = false) => {
         if (isLoading || (!hasMore && !reset)) return;
@@ -499,8 +490,12 @@ window.initializeDynamicGallery = function () {
         // Don't show loader validation here, rely on Sentinel/Observer visibility or just keep it simple
 
         const targetPage = reset ? 1 : currentPage + 1;
-        // Use 'api/' since we're in hash-based routing from index.php (not pages/gallery.php)
-        const url = `api/get_gallery_images.php?page=${targetPage}&limit=12&category=${encodeURIComponent(currentCategory)}`;
+
+        // Determine correct API path based on current location
+        // If we're in pages/ directory, use ../api/, otherwise use api/
+        const isInPagesDir = window.location.pathname.includes('/pages/');
+        const apiPath = isInPagesDir ? '../api/get_gallery_images.php' : 'api/get_gallery_images.php';
+        const url = `${apiPath}?page=${targetPage}&limit=12&category=${encodeURIComponent(currentCategory)}`;
 
         try {
             const res = await fetch(url);
@@ -539,6 +534,9 @@ window.initializeDynamicGallery = function () {
             isLoading = false;
         }
     };
+
+    // Load initial images immediately (after function is defined)
+    loadImages(true);
 
     // Intersection Observer for Infinite Scroll
     if (loader) {

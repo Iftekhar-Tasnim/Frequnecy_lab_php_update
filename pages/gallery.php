@@ -15,16 +15,10 @@
 <?php
 require_once '../config/db.php';
 
-// Fetch images from database with their programme title
-// Fetch images from database with their programme title
-$stmt = $pdo->query("
-    SELECT g.*, p.title as programme_title 
-    FROM gallery_images g
-    LEFT JOIN programmes p ON g.programme_id = p.id 
-    ORDER BY g.upload_date DESC
-    LIMIT 12
-");
-$gallery_items = $stmt->fetchAll(PDO::FETCH_ASSOC);
+// Note: Gallery images are now loaded entirely via AJAX API (api/get_gallery_images.php)
+// This eliminates duplicate queries and improves performance
+// Initial images will be loaded by JavaScript on page load
+$gallery_items = []; // Empty array - all images loaded via API
 ?>
 
 <main class="pt-32 pb-24 min-h-screen bg-platinum-50">
@@ -67,23 +61,9 @@ $gallery_items = $stmt->fetchAll(PDO::FETCH_ASSOC);
         </div>
 
         <!-- Masonry Grid -->
+        <!-- All gallery items are loaded dynamically via AJAX for better performance -->
         <div class="columns-1 md:columns-2 lg:columns-3 gap-6 space-y-6" id="gallery-grid">
-            <?php foreach ($gallery_items as $item): ?>
-                <div class="gallery-item break-inside-avoid group relative rounded-2xl overflow-hidden cursor-zoom-in shadow-md hover:shadow-xl transition-all duration-500 bg-white" 
-                     data-category="<?php echo htmlspecialchars($item['programme_title'] ?? 'Other'); ?>"
-                     data-title="<?php echo htmlspecialchars($item['title']); ?>"
-                     data-description="<?php echo htmlspecialchars($item['description']); ?>"
-                     data-programme="<?php echo htmlspecialchars($item['programme_title'] ?? 'Other'); ?>">
-                    <img src="../<?php echo htmlspecialchars($item['image_path']); ?>" 
-                         alt="<?php echo htmlspecialchars($item['title']); ?>" 
-                         class="w-full h-auto object-cover transform duration-700 group-hover:scale-110"
-                         loading="lazy">
-                    
-                    <!-- Overlay (Tint only) -->
-                    <div class="absolute inset-0 bg-gradient-to-t from-prussian-blue-950/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                    </div>
-                </div>
-            <?php endforeach; ?>
+            <!-- Gallery items will be loaded here by JavaScript -->
         </div>
 
         <!-- Loader for Infinite Scroll -->
