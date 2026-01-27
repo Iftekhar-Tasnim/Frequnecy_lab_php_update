@@ -56,6 +56,13 @@ if (document.readyState === 'loading') {
     initializeNavbarScroll();
     initializeTestimonialsSlider();
     markInitialLoadComplete();
+
+    // Initialize gallery if on gallery page (direct load)
+    if (window.location.pathname.includes('gallery.php') || window.location.hash.includes('/gallery')) {
+        if (typeof window.initializeDynamicGallery === 'function') {
+            window.initializeDynamicGallery();
+        }
+    }
 }
 
 // Navigation active state management
@@ -464,6 +471,12 @@ function initializeTestimonialsSlider() {
 // Initialize dynamic gallery filtering and lightbox
 // Initialize dynamic gallery filtering and lightbox
 window.initializeDynamicGallery = function () {
+    // Prevent multiple initializations
+    if (window.galleryInitialized) {
+        console.log('Gallery already initialized, skipping...');
+        return;
+    }
+
     const galleryGrid = document.getElementById('gallery-grid');
     const filterBtns = document.querySelectorAll('.filter-btn');
     const noResults = document.getElementById('no-results');
@@ -607,4 +620,7 @@ window.initializeDynamicGallery = function () {
             window.galleryKeydownAttached = true;
         }
     }
+
+    // Mark as initialized
+    window.galleryInitialized = true;
 };

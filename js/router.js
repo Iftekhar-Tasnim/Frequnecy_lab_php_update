@@ -188,10 +188,12 @@ class Router {
             }
         }
 
+        // Store previous route before updating
+        const previousRoute = this.currentRoute;
         this.currentRoute = route;
 
-        // If we're on home route and it's the initial load (no currentRoute set), just initialize
-        if (route === '/' && !this.currentRoute && (window.location.pathname === '/' || window.location.pathname.endsWith('index.html'))) {
+        // If we're on home route and it's the initial load, just initialize
+        if (route === '/' && !previousRoute && (window.location.pathname === '/' || window.location.pathname.endsWith('index.html'))) {
             window.history.replaceState({ route: '/' }, '', window.location.pathname);
             this.reinitializePage();
             return;
@@ -516,6 +518,11 @@ class Router {
         }
         if (typeof initializeTestimonialsSlider === 'function') {
             initializeTestimonialsSlider();
+        }
+
+        // Reset gallery flag if navigating away from gallery
+        if (this.currentRoute !== '/gallery' && window.galleryInitialized) {
+            window.galleryInitialized = false;
         }
 
         // Initialize dynamic gallery if on gallery page

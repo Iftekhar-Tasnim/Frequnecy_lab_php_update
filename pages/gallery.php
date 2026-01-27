@@ -95,12 +95,7 @@ $gallery_items = []; // Empty array - all images loaded via API
     </div>
 </div>
 
-<script>
-// Use global initialization to support both direct load and SPA navigation
-if (typeof initializeDynamicGallery === 'function') {
-    initializeDynamicGallery();
-}
-</script>
+
 
 <?php include '../includes/footer.php'; ?>
 

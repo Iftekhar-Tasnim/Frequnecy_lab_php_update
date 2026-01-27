@@ -15,7 +15,5 @@ ADD INDEX idx_upload_date (upload_date DESC);
 ALTER TABLE gallery_images 
 ADD INDEX idx_programme_date (programme_id, upload_date DESC);
 
--- Add index on id for primary key lookups (if not already present)
--- Most databases add this automatically, but we ensure it exists
-ALTER TABLE gallery_images 
-ADD PRIMARY KEY IF NOT EXISTS (id);
+-- Note: Primary key is already defined in table creation (001_initial_schema.sql)
+-- No need to add it again here

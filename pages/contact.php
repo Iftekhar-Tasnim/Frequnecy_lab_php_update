@@ -3,15 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Get in touch with Frequency Lab for robotics, coding, and STEM education programs in Dhaka, Bangladesh. Visit us in Pallabi, Mirpur.">
-    <meta name="keywords" content="Frequency Lab contact, robotics training center Dhaka, STEM education Pallabi, Mirpur coding center, contact Frequency Lab Bangladesh, robotics course Dhaka">
+    <meta name="description" content="Get in touch with Frequency Lab for robotics, coding, and STEM education programs in Dhaka, Bangladesh. Visit us at Rupayan City.">
+    <meta name="keywords" content="Frequency Lab contact, robotics training center Dhaka, STEM education Rupayan City, coding center Dhaka, contact Frequency Lab Bangladesh, robotics course Dhaka">
     <meta name="author" content="Frequency Lab">
     
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://flabbd.com/pages/contact.php">
     <meta property="og:title" content="Contact Us | Frequency Lab Bangladesh | Robotics & Coding Training Center">
-    <meta property="og:description" content="Get in touch with Frequency Lab for robotics, coding, and STEM education programs in Dhaka, Bangladesh. Visit us in Pallabi, Mirpur.">
+    <meta property="og:description" content="Get in touch with Frequency Lab for robotics, coding, and STEM education programs in Dhaka, Bangladesh. Visit us at Rupayan City.">
     <meta property="og:image" content="../assets/logo/F_Lab logo Badge.png">
     <meta property="og:site_name" content="Frequency Lab">
     
@@ -19,7 +19,7 @@
     <meta property="twitter:card" content="summary_large_image">
     <meta property="twitter:url" content="https://flabbd.com/pages/contact.php">
     <meta property="twitter:title" content="Contact Us | Frequency Lab Bangladesh | Robotics & Coding Training Center">
-    <meta property="twitter:description" content="Get in touch with Frequency Lab for robotics, coding, and STEM education programs in Dhaka, Bangladesh. Visit us in Pallabi, Mirpur.">
+    <meta property="twitter:description" content="Get in touch with Frequency Lab for robotics, coding, and STEM education programs in Dhaka, Bangladesh. Visit us at Rupayan City.">
     <meta property="twitter:image" content="../assets/logo/F_Lab logo Badge.png">
     
     <!-- Google Fonts -->
@@ -116,7 +116,7 @@
                                 <div>
                                     <h3 class="font-semibold text-prussian-blue-800 mb-1">Address</h3>
                                     <p class="text-platinum-700">
-                                        H-1/F, Rd-09, Block-C, Sec-12, Pallabi, Mirpur, Dhaka, Bangladesh
+                                        Apt:B1, Level:05, Building:Grand 2 Rupayan City, Dhaka
                                     </p>
                                 </div>
                             </div>
@@ -309,14 +309,14 @@
                     
                     <div class="rounded-2xl overflow-hidden shadow-xl border border-platinum-200">
                         <iframe 
-                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3649.7234567890123!2d90.36!3d23.82!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMjPCsDQ5JzEyLjAiTiA5MMKwMjEnMzYuMCJF!5e0!3m2!1sen!2sbd!4v1234567890123!5m2!1sen!2sbd"
+                            src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d14607.516738914!2d90.4247!3d23.7808!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3755c7a1e3e3e3e3%3A0xb68e8e8e8e8e8e94!2sRupayan%20City%20Uttara!5e0!3m2!1sen!2sbd!4v1738000000000!5m2!1sen!2sbd"
                             width="100%" 
                             height="450" 
                             style="border:0;" 
                             allowfullscreen="" 
                             loading="lazy" 
                             referrerpolicy="no-referrer-when-downgrade"
-                            title="Frequency Lab Location - Pallabi, Mirpur, Dhaka"
+                            title="Frequency Lab Location - Rupayan City, Dhaka"
                         ></iframe>
                     </div>
                 </div>
